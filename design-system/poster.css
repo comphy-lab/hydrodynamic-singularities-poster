@@ -1,0 +1,515 @@
+/* =============================================================
+   CoMPhy Lab · A0 Academic Poster System
+   Built on tokens.css. Paper + ink, one teal accent, gradient
+   reserved for the title rule only. Designed for A0 print and
+   2 m reading distance.
+
+   Load order:  fonts → tokens.css → poster.css → poster-fit.js
+   Markup:      .stage > .poster.poster--{portrait|landscape}.poster--{hero|rail}
+   ============================================================= */
+
+:root {
+  /* ---- A0 geometry (true print size in mm) ---- */
+  --a0-short: 841mm;
+  --a0-long:  1189mm;
+
+  /* ---- Poster margins + rhythm (mm — absolute on the A0 canvas) ---- */
+  --p-pad:      38mm;   /* outer margin */
+  --p-gutter:   26mm;   /* gap between columns */
+  --p-block:    20mm;   /* gap between section blocks */
+  --p-rule:     6mm;    /* thickness of the gradient signature bar */
+
+  /* ---- Poster type scale (pt — absolute, tuned for A0) ---- */
+  --pt-title:    82pt;
+  --pt-subtitle: 33pt;
+  --pt-authors:  29pt;
+  --pt-affil:    21pt;
+  --pt-h2:       37pt;
+  --pt-eyebrow:  19pt;
+  --pt-lede:     29pt;
+  --pt-body:     25pt;
+  --pt-caption:  19pt;
+  --pt-small:    18pt;
+  --pt-mono:     20pt;
+
+  --p-lh-body:  1.42;
+  --p-lh-tight: 1.12;
+}
+
+/* =============================================================
+   Stage — full-viewport letterbox that scales the poster to fit.
+   poster-fit.js sets the transform; here we just centre + clip.
+   ============================================================= */
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 50% 0%, var(--c-paper) 0%, var(--c-paper-tint) 100%);
+}
+.stage::before { content: none; }   /* suppress the global grid overlay behind the poster */
+
+/* =============================================================
+   The poster canvas
+   ============================================================= */
+.poster {
+  position: relative;
+  background: var(--c-surface-strong);
+  color: var(--fg-1);
+  box-shadow: 0 40px 120px rgba(15,12,8,0.22), 0 8px 24px rgba(15,12,8,0.10);
+  position: absolute;
+  top: 0; left: 0;
+  transform-origin: top left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* faint editorial grid, much softer than the site */
+  background-image:
+    linear-gradient(to right, rgba(15,12,8,0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15,12,8,0.018) 1px, transparent 1px);
+  background-size: 26mm 26mm;
+}
+.poster--portrait  { width: var(--a0-short); height: var(--a0-long); }
+.poster--landscape { width: var(--a0-long);  height: var(--a0-short); }
+
+/* The gradient signature: a single bar across the very top. The only
+   place the four-stop brand gradient appears on the whole poster. */
+.poster::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: var(--p-rule);
+  background: linear-gradient(90deg,
+    var(--hero-grad-1) 0%, var(--hero-grad-2) 38%,
+    var(--hero-grad-3) 64%, var(--hero-grad-4) 100%);
+  z-index: 5;
+}
+
+.poster__inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--p-pad);
+  padding-top: calc(var(--p-pad) + var(--p-rule));
+  gap: var(--p-block);
+  min-height: 0;
+}
+
+/* =============================================================
+   Header — title block + authors + logo lockup
+   ============================================================= */
+.p-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--p-gutter);
+  align-items: start;
+  padding-bottom: var(--p-block);
+  border-bottom: 1.5px solid var(--c-border-strong);
+}
+.p-eyebrow {
+  font-family: var(--t-sans);
+  font-size: var(--pt-eyebrow);
+  font-weight: var(--t-weight-semi);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-brand-purple);
+  margin: 0 0 14pt;
+}
+.p-title {
+  font-family: var(--t-serif);
+  font-weight: var(--t-weight-bold);
+  font-size: var(--pt-title);
+  line-height: var(--p-lh-tight);
+  letter-spacing: -0.018em;
+  color: var(--fg-strong);
+  margin: 0;
+  font-variation-settings: "opsz" 144;
+  text-wrap: balance;
+}
+.p-subtitle {
+  font-family: var(--t-serif);
+  font-weight: var(--t-weight-reg);
+  font-style: italic;
+  font-size: var(--pt-subtitle);
+  line-height: 1.2;
+  color: var(--fg-2);
+  margin: 16pt 0 0;
+  max-width: 38ch;
+  text-wrap: pretty;
+}
+.p-authors {
+  font-family: var(--t-sans);
+  font-size: var(--pt-authors);
+  font-weight: var(--t-weight-semi);
+  color: var(--fg-strong);
+  margin: 22pt 0 0;
+  line-height: 1.3;
+}
+.p-authors sup { color: var(--c-accent-teal); font-size: 0.62em; font-weight: var(--t-weight-bold); padding-left: 1pt; }
+.p-affil {
+  font-family: var(--t-sans);
+  font-size: var(--pt-affil);
+  color: var(--fg-2);
+  margin: 10pt 0 0;
+  line-height: 1.4;
+  max-width: 70ch;
+}
+.p-affil sup { color: var(--c-accent-teal); font-weight: var(--t-weight-bold); padding-right: 2pt; }
+
+/* Logo lockup (right side of header) */
+.p-logos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 22pt;
+}
+.p-logos__lab { display: flex; align-items: center; gap: 16pt; }
+.p-logos__lab img { height: 64mm; width: auto; }
+.p-logos__partners { display: flex; align-items: center; gap: 22pt; }
+.p-logos__partners img { height: 26mm; width: auto; opacity: 0.92; }
+.p-logos__sep { width: 1.5px; height: 26mm; background: var(--c-border-strong); }
+
+/* =============================================================
+   Hero strip — graphical abstract (variation A leads with this)
+   ============================================================= */
+.p-hero {
+  display: grid;
+  gap: var(--p-gutter);
+  align-items: center;
+}
+.poster--portrait  .p-hero { grid-template-columns: 1.35fr 1fr; }
+.poster--landscape .p-hero { grid-template-columns: 1fr 1fr; }
+.p-hero__figure {
+  background: var(--c-paper);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 14mm;
+}
+.p-hero__figure img { width: auto; max-width: 100%; max-height: 270mm; height: auto; display: block; mix-blend-mode: multiply; }
+.p-hero__lede {
+  font-family: var(--t-serif);
+  font-size: var(--pt-lede);
+  line-height: 1.4;
+  color: var(--fg-1);
+  margin: 0;
+  text-wrap: pretty;
+}
+.p-hero__lede strong { color: var(--c-accent-coral); font-weight: var(--t-weight-semi); font-family: var(--t-sans); }
+
+/* =============================================================
+   Body columns
+   ============================================================= */
+.p-body { flex: 1; min-height: 0; }
+
+/* Explicit, clip-proof columns (used by the hero variation). */
+.p-cols { display: flex; gap: var(--p-gutter); align-items: stretch; }
+.p-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--p-block); }
+.p-col--wide { flex: 1.25; }
+
+/* A block that grows to absorb vertical slack so columns reach the footer.
+   Make it a flex column; the figure you want to expand gets inline flex:1. */
+.block--grow { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+
+/* Variation B keeps an explicit grid instead of CSS columns */
+.poster--rail .p-main {
+  flex: 1;
+  columns: 2;
+  column-gap: var(--p-gutter);
+}
+.poster--landscape.poster--rail .p-main { columns: 2; }
+.poster--rail .p-main > * { break-inside: avoid; }
+
+/* =============================================================
+   Section block
+   ============================================================= */
+.block { margin: 0 0 var(--p-block); }
+.block__h {
+  display: flex;
+  align-items: baseline;
+  gap: 12pt;
+  font-family: var(--t-serif);
+  font-weight: var(--t-weight-semi);
+  font-size: var(--pt-h2);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: var(--fg-strong);
+  margin: 0 0 16pt;
+  font-variation-settings: "opsz" 72;
+}
+.block__h::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 18pt;
+  height: 18pt;
+  border-radius: 4pt;
+  background: var(--c-accent-teal);
+  transform: translateY(-2pt);
+}
+.block__num {
+  font-family: var(--t-mono);
+  font-size: var(--pt-small);
+  font-weight: var(--t-weight-med);
+  color: var(--c-accent-teal);
+}
+.block p {
+  font-size: var(--pt-body);
+  line-height: var(--p-lh-body);
+  color: var(--fg-1);
+  margin: 0 0 14pt;
+  text-wrap: pretty;
+}
+.block p:last-child { margin-bottom: 0; }
+.block strong { color: var(--c-accent-coral); font-weight: var(--t-weight-semi); }
+.block ul { margin: 0 0 14pt; padding: 0; list-style: none; }
+.block li {
+  position: relative;
+  font-size: var(--pt-body);
+  line-height: 1.36;
+  color: var(--fg-1);
+  padding-left: 26pt;
+  margin: 0 0 12pt;
+}
+.block li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 11pt; height: 11pt;
+  border: 2.5px solid var(--c-accent-teal);
+  border-radius: 50%;
+}
+.block li strong { color: var(--fg-strong); }
+
+/* Emphasised conclusion block — paper card with teal edge */
+.block--key {
+  background: var(--c-paper);
+  border: 1.5px solid var(--c-border);
+  border-left: var(--p-rule) solid var(--c-accent-teal);
+  border-radius: var(--r-sm);
+  padding: 22mm 22mm 22mm 20mm;
+}
+.block--key .block__h::before { display: none; }
+.block--key .block__h { margin-left: 0; }
+
+/* =============================================================
+   Figure placeholders (striped) + real-figure frame
+   ============================================================= */
+.fig {
+  border: 1.5px solid var(--c-border-strong);
+  border-radius: var(--r-sm);
+  background: var(--c-paper);
+  overflow: hidden;
+  margin: 0 0 14pt;
+}
+.fig__slot {
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  background-image: repeating-linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--c-brand-purple) 6%, transparent) 0,
+    color-mix(in srgb, var(--c-brand-purple) 6%, transparent) 2mm,
+    transparent 2mm, transparent 6mm);
+  color: var(--fg-3);
+}
+.fig__slot span {
+  font-family: var(--t-mono);
+  font-size: var(--pt-mono);
+  letter-spacing: 0.04em;
+  color: var(--fg-2);
+  background: var(--c-surface-strong);
+  padding: 6pt 14pt;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--c-border);
+}
+.fig img { width: 100%; height: auto; display: block; }
+.fig__cap {
+  font-family: var(--t-sans);
+  font-size: var(--pt-caption);
+  line-height: 1.36;
+  color: var(--fg-2);
+  padding: 12pt 16pt;
+  border-top: 1px solid var(--c-border);
+}
+.fig__cap b { color: var(--c-accent-teal); font-weight: var(--t-weight-semi); }
+
+.fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14pt; margin: 0 0 14pt; }
+.fig-grid .fig { margin: 0; }
+
+/* =============================================================
+   Chips / metrics
+   ============================================================= */
+.p-chips { display: flex; flex-wrap: wrap; gap: 10pt; margin: 0 0 16pt; }
+.p-chip {
+  font-family: var(--t-sans);
+  font-size: var(--pt-small);
+  font-weight: var(--t-weight-med);
+  padding: 7pt 16pt;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--c-brand-purple) 8%, transparent);
+  color: var(--c-brand-purple);
+  border: 1px solid color-mix(in srgb, var(--c-brand-purple) 22%, transparent);
+}
+.p-chip--teal { background: color-mix(in srgb, var(--c-accent-teal) 9%, transparent); color: var(--c-accent-teal); border-color: color-mix(in srgb, var(--c-accent-teal) 26%, transparent); }
+
+.metric-row { display: flex; gap: var(--p-gutter); margin: 0 0 16pt; }
+.metric { flex: 1; }
+.metric__v {
+  font-family: var(--t-serif);
+  font-weight: var(--t-weight-bold);
+  font-size: 46pt;
+  line-height: 1;
+  color: var(--c-accent-teal);
+  letter-spacing: -0.02em;
+}
+.metric__v small { font-size: 0.5em; color: var(--fg-2); font-weight: var(--t-weight-med); }
+.metric__l {
+  font-family: var(--t-sans);
+  font-size: var(--pt-small);
+  color: var(--fg-2);
+  margin-top: 6pt;
+  line-height: 1.3;
+}
+
+/* =============================================================
+   References + acknowledgements (small print)
+   ============================================================= */
+.refs { margin: 0; padding: 0; list-style: none; counter-reset: ref; }
+.refs li {
+  position: relative;
+  font-family: var(--t-sans);
+  font-size: var(--pt-small);
+  line-height: 1.34;
+  color: var(--fg-2);
+  padding-left: 30pt;
+  margin: 0 0 10pt;
+}
+.refs li::before {
+  counter-increment: ref;
+  content: "[" counter(ref) "]";
+  position: absolute;
+  left: 0; top: 0;
+  font-family: var(--t-mono);
+  color: var(--c-accent-teal);
+  font-weight: var(--t-weight-med);
+}
+.refs b { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
+.refs code, .ack code { font-family: var(--t-mono); font-size: 0.94em; color: var(--c-accent-coral); }
+
+.ack {
+  font-family: var(--t-sans);
+  font-size: var(--pt-small);
+  line-height: 1.4;
+  color: var(--fg-2);
+}
+
+/* =============================================================
+   Footer — QR + repo + funding strip
+   ============================================================= */
+.p-footer {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--p-gutter);
+  align-items: center;
+  padding-top: var(--p-block);
+  border-top: 1.5px solid var(--c-border-strong);
+}
+.p-contact { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); line-height: 1.5; }
+.p-contact b { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
+.p-contact .mono { font-family: var(--t-mono); color: var(--c-accent-teal); }
+
+.p-funding { display: flex; align-items: center; justify-content: flex-end; gap: 20pt; }
+.p-funding img { height: 22mm; width: auto; opacity: 0.9; }
+
+/* QR placeholder — three finder squares + label. Drop a real PNG in .qr img */
+.qr {
+  display: flex;
+  align-items: center;
+  gap: 16pt;
+}
+.qr__code {
+  position: relative;
+  width: 52mm; height: 52mm;
+  flex: 0 0 auto;
+  border: 2px solid var(--fg-strong);
+  border-radius: var(--r-xs);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3mm, color-mix(in srgb, var(--fg-strong) 8%, transparent) 3mm 4mm),
+    repeating-linear-gradient(90deg, transparent 0 3mm, color-mix(in srgb, var(--fg-strong) 8%, transparent) 3mm 4mm),
+    var(--c-surface-strong);
+  overflow: hidden;
+}
+.qr__code img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.qr__code::before, .qr__code::after, .qr__code i {
+  content: ""; position: absolute; width: 13mm; height: 13mm;
+  border: 3.5mm solid var(--fg-strong); border-radius: 2mm; background: var(--c-surface-strong);
+}
+.qr__code::before { top: 4mm; left: 4mm; }
+.qr__code::after  { top: 4mm; right: 4mm; }
+.qr__code i { bottom: 4mm; left: 4mm; }
+.qr.has-img .qr__code { background: var(--c-surface-strong); }
+.qr.has-img .qr__code::before, .qr.has-img .qr__code::after, .qr.has-img .qr__code i { display: none; }
+.qr__label { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); line-height: 1.4; }
+.qr__label b { display: block; color: var(--fg-strong); font-weight: var(--t-weight-semi); font-size: var(--pt-caption); margin-bottom: 4pt; }
+.qr__label .mono { font-family: var(--t-mono); color: var(--c-accent-teal); font-size: 0.92em; }
+
+/* =============================================================
+   Variation B — side rail
+   ============================================================= */
+.poster--rail .p-stack { display: flex; gap: var(--p-gutter); flex: 1; min-height: 0; }
+.poster--portrait.poster--rail  .p-rail { flex: 0 0 250mm; }
+.poster--landscape.poster--rail .p-rail { flex: 0 0 300mm; }
+.poster--rail .p-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-block);
+  padding-right: var(--p-gutter);
+  border-right: 1.5px solid var(--c-border-strong);
+}
+.poster--rail .p-main { flex: 1; min-width: 0; }
+
+.rail-card {
+  background: var(--c-paper);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-sm);
+  padding: 18mm;
+}
+.rail-card .block__h { font-size: 31pt; }
+
+/* =============================================================
+   Floating toolbar (screen only, hidden when embedded / printing)
+   ============================================================= */
+.toolbar {
+  position: fixed;
+  right: 18px; bottom: 18px;
+  z-index: 50;
+  display: flex; gap: 10px;
+  font-family: var(--t-sans);
+}
+.toolbar button, .toolbar a {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: var(--c-accent-teal);
+  color: #fff;
+  border: 0;
+  border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+.toolbar button:hover, .toolbar a:hover { background: var(--c-accent-teal-hover); }
+.toolbar .toolbar__ghost { background: var(--c-surface-strong); color: var(--fg-1); border: 1px solid var(--c-border-strong); }
+body.embed .toolbar { display: none; }
+
+/* =============================================================
+   Print — true A0, transform cleared (size set per file via @page)
+   ============================================================= */
+@media print {
+  .stage { position: static; inset: auto; overflow: visible; display: block; background: #fff; }
+  .poster { transform: none !important; box-shadow: none; width: 100%; height: 100%; }
+  .toolbar { display: none !important; }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "hydrodynamic-singularities-poster",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A0 academic poster on hydrodynamic singularities, built on the CoMPhy Lab design system.",
+  "scripts": {
+    "build": "tsx src/build.ts",
+    "typecheck": "tsc --noEmit",
+    "poster": "python3 scripts/make_poster.py"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
