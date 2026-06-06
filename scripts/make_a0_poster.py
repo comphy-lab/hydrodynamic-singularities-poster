@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "outputs"
 LOGO_DIR = ROOT / "assets" / "logos"
+FIGURE_DIR = ROOT / "assets" / "figures"
 POSTER_STEM = "hydrodynamic_singularities_poster"
 
 A0_WIDTH_MM = 841
@@ -281,88 +282,79 @@ def build_svg() -> str:
     parts.append(rect(0, 0, A0_WIDTH_MM, A0_HEIGHT_MM, fill=COLORS["pale_blue"]))
     parts.append(rect(20, 20, 801, 1149, rx=21, fill=COLORS["paper"], stroke=COLORS["navy"], **{"stroke-width": 2.7}))
 
-    parts.append(text_lines("HYDRODYNAMIC SINGULARITIES", x=420.5, y=75, width_chars=34, size=29, fill=COLORS["blue"], weight=950, anchor="middle"))
-    parts.append(text_lines("Vatsal Sanjay", x=420.5, y=108, width_chars=24, size=14.5, weight=800, anchor="middle"))
-    parts.append(text_lines("Physics of Fluids | CoMPhy Lab | Durham University", x=420.5, y=131, width_chars=62, size=10.3, fill=COLORS["muted"], weight=700, anchor="middle"))
-    parts.append(line(45, 156, 796, 156, stroke=COLORS["navy"], **{"stroke-width": 1.2}))
+    parts.append(text_lines("HYDRODYNAMIC SINGULARITIES", x=420.5, y=66, width_chars=34, size=26, fill=COLORS["blue"], weight=950, anchor="middle"))
+    parts.append(text_lines("When fluids forget their past", x=420.5, y=98, width_chars=34, size=13.5, fill=COLORS["ink"], weight=850, anchor="middle"))
+    parts.append(text_lines("Vatsal Sanjay | Physics of Fluids | CoMPhy Lab | Durham University", x=420.5, y=122, width_chars=76, size=9.2, fill=COLORS["muted"], weight=700, anchor="middle"))
+    parts.append(line(45, 143, 796, 143, stroke=COLORS["navy"], **{"stroke-width": 1.1}))
 
-    abstract = [
+    headline = [
+        text_lines("What is Singularity?", x=420.5, y=185, width_chars=34, size=25, fill=COLORS["blue"], weight=950, anchor="middle"),
         text_lines(
-            "Hydrodynamic singularities appear when a smooth free surface focuses motion into a neck, bridge, rim, or tip. The global flow may be millimetres wide, but the decisive balance can be set by a much smaller inner region.",
-            x=54,
-            y=232,
-            width_chars=55,
-            size=9.3,
+            "A singularity is when a smooth physical process \"blows up\" - something finite becomes infinite in a finite time or at a finite place.",
+            x=420.5,
+            y=222,
+            width_chars=86,
+            size=12.2,
             fill=COLORS["ink"],
+            weight=650,
+            anchor="middle",
         ),
         text_lines(
-            "Poster content placeholder: replace with the final student-facing story once the figures are chosen.",
-            x=54,
-            y=307,
-            width_chars=50,
-            size=7.8,
+            "Close to a singularity, the system loses memory of its initial condition: the local dynamics become universal and self-similar.",
+            x=420.5,
+            y=266,
+            width_chars=88,
+            size=9.2,
             fill=COLORS["muted"],
-            weight=700,
+            weight=750,
+            anchor="middle",
         ),
     ]
-    parts.append(section_box(39, 178, 375, 164, "Abstract", abstract))
+    parts.append(section_box(39, 158, 763, 138, "", headline))
 
-    highlights = [
-        text_lines("Key questions", x=451, y=231, width_chars=22, size=10.0, fill=COLORS["ink"], weight=850),
-        text_lines("- What local length scale is collapsing?", x=451, y=253, width_chars=44, size=8.4, fill=COLORS["ink"]),
-        text_lines("- Which balance resolves the near-singular region?", x=451, y=274, width_chars=46, size=8.4, fill=COLORS["ink"]),
-        text_lines("- How does a small neck or tip control the whole flow?", x=451, y=295, width_chars=44, size=8.4, fill=COLORS["ink"]),
-        text_lines("Useful numbers: Oh, We, Ca, De, Wi", x=451, y=323, width_chars=44, size=8.4, fill=COLORS["blue"], weight=850),
+    drop_content = [
+        text_lines("Drop pinch-off", x=62, y=345, width_chars=24, size=14.5, fill=COLORS["blue"], weight=950),
+        text_lines("Newtonian liquid: the neck radius collapses to a true finite-time singularity.", x=62, y=369, width_chars=70, size=8.4, fill=COLORS["ink"], weight=650),
+        text_lines("Add polymers: the singularity is arrested; the drop forms a long thread and beads-on-a-string instead.", x=62, y=574, width_chars=78, size=8.4, fill=COLORS["red"], weight=800),
+        image(FIGURE_DIR / "drop_experiment_two_rows.png", 62, 386, 705, 177),
+        rect(651, 568, 106, 28, rx=5, fill="#FFF1E6", stroke=COLORS["orange"], **{"stroke-width": 0.8}),
+        text_lines("polymers kill the singularity", x=704, y=586, width_chars=28, size=6.6, fill=COLORS["red"], weight=900, anchor="middle"),
     ]
-    parts.append(section_box(427, 178, 375, 164, "Highlights", highlights))
+    parts.append(section_box(39, 316, 763, 298, "1. Drops: elasticity changes the route", drop_content))
 
-    seq_content = [
-        text_lines("One visual spine: coalescence, necking, jetting, and breakup", x=420.5, y=403, width_chars=76, size=10.4, fill=COLORS["ink"], weight=800, anchor="middle"),
-        time_sequence(55, 424, 731, 148),
-        text_lines("Use this central strip for real Basilisk or experimental frames later. Keep time labels and one colour field; do not bury the story in tiny subpanels.", x=70, y=595, width_chars=112, size=8.1, fill=COLORS["muted"]),
+    bubble_content = [
+        text_lines("Bubble pinch-off", x=62, y=662, width_chars=24, size=14.5, fill=COLORS["blue"], weight=950),
+        text_lines("Newtonian liquid: the neck pinches to a singular point.", x=62, y=686, width_chars=63, size=8.4, fill=COLORS["ink"], weight=650),
+        text_lines("Add polymers: the near-singular sequence looks almost unchanged. The singularity survives.", x=62, y=891, width_chars=77, size=8.4, fill=COLORS["green"], weight=850),
+        image(FIGURE_DIR / "bubble_experiment_two_rows.png", 62, 703, 705, 177),
+        rect(634, 886, 123, 28, rx=5, fill="#E9F8EF", stroke=COLORS["green"], **{"stroke-width": 0.8}),
+        text_lines("polymers do not erase it", x=695.5, y=904, width_chars=27, size=6.6, fill=COLORS["green"], weight=900, anchor="middle"),
     ]
-    parts.append(section_box(39, 355, 763, 263, "From smooth motion to a tiny decisive region", seq_content))
+    parts.append(section_box(39, 633, 763, 298, "2. Bubbles: elasticity leaves the singularity intact", bubble_content))
 
-    mechanism_left = [
-        text_lines("Pinch-off", x=62, y=694, width_chars=16, size=11.2, fill=COLORS["ink"], weight=900),
-        draw_pinchoff(152, 761, 1.12, COLORS["blue"], neck=0.55),
-        text_lines("The minimum radius becomes the natural clock. Competing balances decide the thinning route.", x=61, y=826, width_chars=42, size=7.5, fill=COLORS["muted"]),
-        text_lines("Coalescence", x=246, y=694, width_chars=16, size=11.2, fill=COLORS["ink"], weight=900),
-        draw_bridge(336, 761, 1.10, 0.95),
-        text_lines("A microscopic bridge reshapes both drops, coupling local curvature to global motion.", x=245, y=826, width_chars=40, size=7.5, fill=COLORS["muted"]),
+    sim_content = [
+        text_lines("Numerical snapshots: controlled comparison", x=62, y=985, width_chars=48, size=8.8, fill=COLORS["blue"], weight=900),
+        image(FIGURE_DIR / "numerical_snapshots.png", 62, 997, 193, 105),
+        text_lines(
+            "The simulations make the contrast explicit: droplets are regularised by elasticity into persistent filaments, while bubbles retain a Newtonian-looking singular pinch-off pathway.",
+            x=330,
+            y=994,
+            width_chars=45,
+            size=7.2,
+            fill=COLORS["ink"],
+            weight=650,
+        ),
+        rect(330, 1049, 416, 55, rx=7, fill="#162235"),
+        text_lines("Scaling-law blurb", x=346, y=1067, width_chars=24, size=8.0, fill="#BAE6FD", weight=900),
+        text_lines("near pinch-off: h_min ~ (t0 - t)^alpha", x=346, y=1083, width_chars=48, size=6.5, fill="#FFFFFF", weight=700),
+        text_lines("self-similarity: shapes collapse after rescaling by the local neck radius", x=346, y=1098, width_chars=80, size=5.6, fill="#FFFFFF"),
     ]
-    parts.append(section_box(39, 640, 375, 255, "Local geometry", mechanism_left))
+    parts.append(section_box(39, 940, 763, 176, "3. Why singularities matter", sim_content))
 
-    mechanism_right = [
-        text_lines("Jets and sheets", x=451, y=694, width_chars=22, size=11.2, fill=COLORS["ink"], weight=900),
-        draw_jet(535, 784, 0.95, 55),
-        path("M 600 772 C 625 740, 689 740, 720 772", fill="none", stroke=COLORS["orange"], **{"stroke-width": 5.0, "stroke-linecap": "round"}),
-        text_lines("Rims, tips, ligaments, and droplets are different routes to the same question: where does the flow focus next?", x=451, y=826, width_chars=49, size=8.1, fill=COLORS["muted"]),
-        draw_beads(716, 785, 0.78),
-    ]
-    parts.append(section_box(427, 640, 375, 255, "Pathways", mechanism_right))
-
-    lower_left = [
-        text_lines("Placeholder schematic", x=62, y=967, width_chars=26, size=9.2, fill=COLORS["ink"], weight=850),
-        schematic_panel(60, 984, 154, 104),
-        text_lines("Replace with the final mechanism drawing: neck radius, outer scale, stress balance, and the dimensionless groups that matter.", x=250, y=984, width_chars=34, size=7.7, fill=COLORS["muted"]),
-    ]
-    parts.append(section_box(39, 917, 375, 190, "What sets the cutoff?", lower_left))
-
-    lower_right = [
-        text_lines("Regime-map slot", x=451, y=967, width_chars=24, size=9.2, fill=COLORS["ink"], weight=850),
-        regime_map(451, 984, 150, 104),
-        text_lines("Use this for the final take-home message: which regime breaks, which regime survives, and what physics changes the route.", x=620, y=984, width_chars=34, size=7.7, fill=COLORS["muted"]),
-    ]
-    parts.append(section_box(427, 917, 375, 190, "Conclusion", lower_right))
-
-    parts.append(line(45, 1121, 796, 1121, stroke=COLORS["navy"], **{"stroke-width": 1.1}))
-    parts.append(text_lines("Physics of Fluids", x=145, y=1132, width_chars=22, size=6.5, fill=COLORS["muted"], anchor="middle", weight=700))
-    parts.append(text_lines("CoMPhy Lab", x=420.5, y=1130, width_chars=20, size=7.2, fill=COLORS["muted"], anchor="middle", weight=800))
-    parts.append(text_lines("Durham University", x=693, y=1132, width_chars=24, size=6.5, fill=COLORS["muted"], anchor="middle", weight=700))
-    parts.append(image(LOGO_DIR / "physics-of-fluids.png", 90, 1135, 110, 45))
-    parts.append(image(LOGO_DIR / "comphy-lab.png", 352.5, 1131, 136, 56))
-    parts.append(image(LOGO_DIR / "durham-university.png", 625, 1139, 138, 43))
+    parts.append(rect(45, 1124, 751, 42, rx=6, fill=COLORS["paper"], stroke="#D7E2EF", **{"stroke-width": 0.8}))
+    parts.append(image(LOGO_DIR / "physics-of-fluids.png", 78, 1131, 82, 31))
+    parts.append(image(LOGO_DIR / "comphy-lab.png", 358, 1126, 125, 38))
+    parts.append(image(LOGO_DIR / "durham-university.png", 648, 1131, 118, 31))
 
     defs = """
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">

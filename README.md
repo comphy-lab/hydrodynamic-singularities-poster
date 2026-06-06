@@ -6,8 +6,8 @@ A0 poster scaffold for a student-facing poster on hydrodynamic singularities.
 
 This repository generates an editable A0 poster skeleton for the Durham Physics
 Staff-Student Research Poster Event on 12 June 2026. The current output is a
-visual scaffold: large structure, placeholder copy, and vector illustrations for
-pinch-off, coalescence, jets, sheets, and viscoelastic beads-on-a-string.
+working scaffold: large structure, real experimental sequences, numerical
+snapshots, and editable text around the drop-versus-bubble singularity story.
 
 ## Build
 
@@ -29,6 +29,9 @@ Generated assets:
 - `assets/logos/physics-of-fluids.png`
 - `assets/logos/comphy-lab.png`
 - `assets/logos/durham-university.png`
+- `assets/figures/drop_experiment_two_rows.png`
+- `assets/figures/bubble_experiment_two_rows.png`
+- `assets/figures/numerical_snapshots.png`
 
 The SVG is the editable source. The PDF is the print-facing export. The PNG is
 a quick visual preview.
@@ -46,9 +49,11 @@ brew install librsvg
 
 ## Notes
 
-This is deliberately a skeleton. The content pass should replace the placeholder
-panel text with the final undergraduate-facing narrative and real simulation or
-figure assets where useful.
+This is deliberately still a skeleton for later content passes. The current
+version fixes the first-pass narrative: singularities make a system forget its
+memory, Newtonian drop and bubble pinch-off are singular, polymers suppress the
+drop singularity into beads-on-a-string, and polymers leave bubble pinch-off
+nearly unchanged.
 
 The current layout is informed by Vatsal's earlier LMC/JMBC posters and the
 Solidifying Jets student poster: centred title, blue framed sections, a dominant

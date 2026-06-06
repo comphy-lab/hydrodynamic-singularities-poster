@@ -6,6 +6,7 @@ This repo builds an A0 poster scaffold for a Durham Physics staff-student resear
 
 ```text
 hydrodynamic-singularities-poster/
+├── assets/       # Committed logo and figure assets used by the generator
 ├── scripts/      # Poster-generation scripts
 ├── outputs/      # Generated SVG/PDF/PNG poster assets
 ├── docs/         # Notes for later content passes
@@ -30,7 +31,9 @@ The script writes `outputs/hydrodynamic_singularities_poster.svg` and uses
 - Keep the CoMPhy Lab logo centred in the footer; Physics of Fluids sits left,
   Durham University sits right.
 - Keep content student-facing: mechanism, visual example, one scaling breadcrumb.
-- Prefer vector geometry and editable text over flattened raster art.
+- Prefer vector geometry and editable text, but use committed raster crops for
+  real experimental or numerical sequences.
 - Generated final assets in `outputs/` are allowed in version control.
 - Copied logo assets in `assets/logos/` are intentionally committed.
+- Cropped figure assets in `assets/figures/` are intentionally committed.
 - Do not commit private correspondence, event emails, or screenshots.
