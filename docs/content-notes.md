@@ -1,63 +1,74 @@
 # Content Notes
 
-The poster is built on the **CoMPhy Lab design system** (hero-band A0 layout).
-Content lives in [`src/content.ts`](../src/content.ts); this file records the
-narrative and the design decisions behind it.
+The poster is built on the **CoMPhy Lab design system** (A0). It is a
+student-facing *introduction to hydrodynamic singularities*, **not** a companion
+to a paper. Content lives in [`src/content.ts`](../src/content.ts); this file
+records the narrative and design decisions.
 
-Based on Verschuur, Oratis, Sanjay & Snoeijer, *How elasticity affects bubble
-pinch-off* (arXiv:2511.20075, submitted to *Phys. Rev. Fluids*). Equations are
-real LaTeX rendered by KaTeX; author the maths in `$…$` / `$$…$$` in
-`src/content.ts` (scaling/stress block `formula` fields are raw LaTeX).
+The science draws on Verschuur, Oratis, Sanjay & Snoeijer, *How elasticity
+affects bubble pinch-off* (arXiv:2511.20075), but the poster leads with the
+phenomenon, not the paper. Equations are real LaTeX rendered by KaTeX; author the
+maths in `$…$` / `$$…$$` (and the raw-LaTeX `scaling` / `compare` fields).
 
-## Narrative
+## Narrative (phenomenon → twist → why)
 
-A singularity is a smooth physical process that blows up — a finite quantity
-becoming infinite in a finite time or place. Close to it the flow becomes
-universal and self-similar, forgetting its initial condition: a Newtonian neck
-thins as `h ∼ (t₀−t)^{2/3}` for a drop and `(t₀−t)^{1/2}` for a bubble.
+1. **Singularities are cool — and they erase memory.** When a free surface
+   pinches off, the neck radius races to zero in finite time and the shape turns
+   self-similar, `h ∼ (t₀−t)^α`, a universal form that *forgets how it began*.
+   → the **hero**: a drop pinch-off time series, then a bubble one (the two
+   Newtonian "Water" rows, cropped from the experimental figures). Drop scales
+   as `(t₀−t)^{2/3}` (clean); bubble as `≈(t₀−t)^{1/2}` (leading order, with a
+   weak log correction — keep it soft).
 
-The spine is the **drop vs bubble** contrast, set by *how strongly the polymer
-stress diverges*:
+2. **The twist — elasticity is memory.** A dissolved polymer stores its
+   stretching history over a relaxation time, so it should hand the memory back.
+   It does for a **drop** (axial thread → strong stress `σ_zz ∼ G(h₀/h)⁴` →
+   beads-on-a-string), but not for a dilute **bubble** (radial cavity → weak
+   stress `σ_rr ∼ G(h₀/h)²` → pinches like water).
 
-- **Drops** — the stretching is axial and capillary, so the elastic stress
-  diverges strongly, `σ_zz ∼ G(h₀/h)⁴`. Even a dilute polymer grows a persistent
-  thread (the route to beads-on-a-string) and arrests pinch-off.
-- **Bubbles** — the stretching is radial and inertial, so the stress diverges
-  only as `σ_rr ∼ G(h₀/h)²`. In the dilute limit no thread forms and the
-  pinch-off stays Newtonian-like; a thread needs high polymer concentration
-  (beyond Oldroyd-B) and is then sensitive to the needle size.
+3. **Why the split — driving, resisting, geometry.** A drop is capillary-driven
+   and axial; a bubble is inertia-driven and radial. Two extra powers of
+   `(h₀/h)` decide whether a pinch of polymer can win; the elastocapillary
+   number `Ec = G h₀/γ` sets the balance.
 
-Captured by direct simulation (Basilisk C) and an Oldroyd-B model.
+Physics verified (June 2026, multi-agent adversarial pass): all scalings and the
+4-vs-2 stress contrast confirmed; the only hedge is the bubble's `½` log
+correction. All references verified exact.
 
-## Layout mapping (hero-band)
-
-Two parallel columns (concept | scaling, then drop | bubble), a full-width
-synthesis band, and a full-width references/acknowledgements band. No section
-numbers.
+## Layout mapping (phenomenon-first)
 
 | Slot | Content | Asset |
 |---|---|---|
-| Header | title, standfirst, author, CoMPhy mark (centred) | `assets/logos/comphy-mark.png` |
-| Hero — figure | the numerical Newtonian/viscoelastic comparison (graphical abstract) | `assets/figures/numerical_snapshots.png` |
-| Hero — side | lede (singularity + memory loss + punchline) over the two h(t) scaling plots | `assets/figures/hero_scaling.png` |
-| Left column | *What is a singularity?* (concept) → *Drops: elasticity changes the route* + coral verdict | `assets/figures/drop_experiment_two_rows.png` |
-| Right column | *The self-similar fingerprint* (scaling) → *Bubbles: elasticity leaves the singularity intact* + teal verdict | `assets/figures/bubble_experiment_two_rows.png` |
-| Full-width band | *What it tells us* — three takeaways across the width | — |
+| Header | title, memory standfirst, author line, CoMPhy mark | `assets/logos/comphy-mark.png` |
+| Hero — lede | what a singularity is + memory loss | — |
+| Hero — strip 1 | *A drop pinches off* + `(t₀−t)^{2/3}` | `assets/figures/hero_drop_pinchoff.png` |
+| Hero — strip 2 | *A bubble pinches off* + `(t₀−t)^{1/2}` | `assets/figures/hero_bubble_pinchoff.png` |
+| Lead band | *Elasticity is memory* — the pivot (`place: "lead"`) | — |
+| Left column | *The drop remembers* + coral verdict | `assets/figures/drop_experiment_two_rows.png` |
+| Right column | *The bubble forgets anyway* + teal verdict | `assets/figures/bubble_experiment_two_rows.png` |
+| Tail band | *Why elasticity picks sides* — drop-vs-bubble compare grid | — |
 | Full-width endmatter | references (2-column) + acknowledgements | — |
 | Footer | QR → comphy-lab.org, contact, partner marks | `assets/logos/{durham-university,physics-of-fluids,basilisk}.png` |
 
+The hero strips (`hero_drop_pinchoff.png`, `hero_bubble_pinchoff.png`) are
+**placeholders** cropped from the Newtonian rows of the experimental figures —
+swap in final artwork when ready. The old paper-style hero
+(`numerical_snapshots.png`) and the schematic `hero_scaling.png` are no longer
+used in the layout.
+
 ## Figures
 
-- **Numerical snapshots** (hero) — the controlled Basilisk comparison: bubble and
-  drop necks, Newtonian vs viscoelastic. The clearest single statement of the
-  result, so it leads.
-- **Experimental crops** (sections 2–3) — deliberately keep only the Newtonian
-  and elastic rows; the third row from the source PDFs is ignored. Capped to a
-  shared height so the two columns align.
-- **Hero h(t) scaling plots** (`hero_scaling.png`) — generated by
-  `scripts/make_scaling_plots.py`: schematic `h(t)` vs `t` axes (no data yet) for
-  drop and bubble, each with a log-log inset showing the self-similar 1/2 scaling.
-  Add real neck-radius data in the marked block of that script and rerun it.
+- **Hero strips** (`hero_drop_pinchoff.png`, `hero_bubble_pinchoff.png`) — the
+  Newtonian ("Water") rows cropped from the experimental two-row figures, used as
+  the phenomenon-first hero (drop time series, then bubble). **Placeholders** —
+  swap in final artwork; keep the wide filmstrip aspect so the hero layout holds.
+- **Experimental two-row figures** (drop / bubble columns) — Newtonian row vs
+  dilute-polymer row; this is the elasticity evidence. Capped to a shared height
+  so the two columns align.
+- **Unused** — `numerical_snapshots.png` (the old paper-style graphical-abstract
+  hero) and `hero_scaling.png` (the schematic h(t) plots from
+  `scripts/make_scaling_plots.py`) are kept in `assets/` but no longer placed in
+  the layout. Reinstate the scaling plots only if a quantitative panel is wanted.
 
 ## Visual direction
 
@@ -69,7 +80,11 @@ numbers.
 
 ## To finalise before printing
 
-- Verify/curate the references in `src/content.ts` (currently canonical
-  starting points: Eggers 1997; Day–Hinch–Lister 1998; Clasen 2006; Basilisk).
-- Confirm author list / acknowledgements.
+- Swap the placeholder hero strips for final drop / bubble pinch-off artwork.
+- Confirm the **byline** (currently the full paper author order, no superscript
+  marks) — this is Vatsal's poster at his own event, so the order may want to
+  change.
+- References are verified exact (June 2026): host paper + Eggers RMP 1997,
+  Day–Hinch–Lister 1998, Burton 2005, Clasen 2006, Eggers–Herrada–Snoeijer 2020;
+  Popinet/Basilisk credited in the acknowledgements rather than the list.
 - Check the print route and that the PDF is true A0 (the driver reports this).

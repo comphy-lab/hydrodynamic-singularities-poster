@@ -57,14 +57,28 @@ export interface Meta {
   subtitle?: string;
   authors: Author[];
   affiliations: Affiliation[];
+  /** Optional secondary "with …" collaborator line under the byline. */
+  collaborators?: string;
+}
+
+/** One labelled pinch-off filmstrip in the hero (a drop, then a bubble). */
+export interface HeroStrip {
+  /** Left-hand label, e.g. "A drop pinches off". `<strong>` → coral. */
+  label: string;
+  /** Optional self-similar scaling law (LaTeX, no $) pinned by the label. */
+  scaling?: string;
+  /** Optional one-line note under the label (e.g. timescale). */
+  note?: string;
+  figure: Figure;
 }
 
 export interface Hero {
-  figure: Figure;
-  /** Serif lede beside the hero figure; `<strong>` → coral. */
+  /** Serif lede above the filmstrips; the hook + what a singularity is. */
   lede: string;
-  /** Optional figure stacked under the lede (e.g. the h(t) scaling plots). */
-  plots?: Figure;
+  /** The pinch-off time series — drop first, then bubble. */
+  strips: HeroStrip[];
+  /** Shared one-line caption tying the strips together. */
+  caption?: string;
 }
 
 /** A standard numbered section block. */
@@ -89,6 +103,8 @@ export interface KeyBlock {
   heading: string;
   body?: string[];
   items?: string[];
+  /** For `column:"full"` bands: render before ("lead") or after ("tail", default) the body columns. */
+  place?: "lead" | "tail";
 }
 
 /** A mono scaling-law breadcrumb. */
@@ -99,6 +115,21 @@ export interface ScalingBlock {
   /** HTML; rendered large in mono. */
   formula: string;
   note: string;
+}
+
+/** A drop-vs-bubble comparison grid: rows (driving, resisting, geometry…) × 2 cols. */
+export interface CompareBlock {
+  kind: "compare";
+  column: Column;
+  heading: string;
+  /** Column headers, e.g. ["Drop", "Bubble"]. */
+  columns: [string, string];
+  /** Each row: a row label and the two cell values (HTML/LaTeX allowed). */
+  rows: { label: string; a: string; b: string }[];
+  /** Optional closing line under the grid. */
+  note?: string;
+  /** For `column:"full"` bands: render before ("lead") or after ("tail", default) the body columns. */
+  place?: "lead" | "tail";
 }
 
 export interface ReferencesBlock {
@@ -120,6 +151,7 @@ export type Block =
   | SectionBlock
   | KeyBlock
   | ScalingBlock
+  | CompareBlock
   | ReferencesBlock
   | AckBlock;
 

@@ -33,7 +33,20 @@ const POSTER_EXTRAS = `
 /* Tighten the A0 rhythm — this poster is content-dense, so trim the outer
    margin, the inter-block gap and the column gutter to keep everything on one
    sheet without overflow. */
-:root { --p-pad: 32mm; --p-block: 15mm; --p-gutter: 22mm; }
+:root { --p-pad: 30mm; --p-block: 11mm; --p-gutter: 22mm; }
+
+/* Header — tighten the lockup so the title block doesn't eat the sheet */
+.p-header { padding-bottom: 11mm; }
+.p-eyebrow { margin-bottom: 8pt; }
+.p-subtitle { max-width: 62ch; font-size: 24pt; margin-top: 11pt; }
+.p-authors { margin-top: 9pt; }
+.p-affil { margin-top: 5pt; }
+.p-collab { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); margin: 6pt 0 0; line-height: 1.4; max-width: 78ch; }
+.p-collab b { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
+
+/* Full-width key cards (the pivot + the compare grid) sit slimmer than the
+   default conclusion card so the dense poster still fits one A0 sheet. */
+.block--key.block--band { padding: 11mm 18mm; }
 
 /* Outcome verdict chip pinned under a section — the only coral/teal call-outs */
 .p-outcome {
@@ -72,7 +85,7 @@ const POSTER_EXTRAS = `
    figure / caption / verdict can never be clipped behind the bands below it.
    The poster then fills via its bands + a small uniform bottom margin. */
 .p-body { flex: 0 0 auto; }
-.p-footer { margin-top: 0; }
+.p-footer { margin-top: auto; }
 
 /* Partner-mark treatments so each sits cleanly on warm paper */
 .p-partner--multiply { mix-blend-mode: multiply; }
@@ -83,13 +96,64 @@ const POSTER_EXTRAS = `
 .p-header { align-items: center; }
 .p-logos__lab img { height: 52mm; }
 
-/* Hero: lede over the h(t) scaling plots in the side column */
-.p-hero { align-items: start; }
-.p-hero__side { display: flex; flex-direction: column; gap: var(--p-block); min-height: 0; }
-.p-hero__lede { padding-top: 2mm; }
-.p-hero__plots { margin: 0; }
-.p-hero__plots img { width: 100%; height: auto; display: block; }
-.p-hero__plots .fig__cap { padding: 10pt 0 0; border-top: 1px solid var(--c-border); }
+/* Hero: the phenomenon first — two stacked pinch-off filmstrips (drop, then
+   bubble), each with a left rail (what it is + its self-similar scaling). */
+.p-hero--strips { display: block; }
+.p-hero__lede {
+  font-size: 25pt; line-height: 1.34; max-width: 78ch;
+  margin: 0 0 var(--p-block);
+}
+.p-strips { display: flex; flex-direction: column; gap: 11mm; }
+.p-strip {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--p-gutter);
+  align-items: center;
+  background: var(--c-paper);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: 11mm 13mm;
+}
+.p-strip__rail { min-width: 0; }
+.p-strip__label {
+  font-family: var(--t-serif); font-weight: var(--t-weight-semi);
+  font-size: 35pt; line-height: 1.08; color: var(--fg-strong);
+  letter-spacing: -0.012em;
+}
+.p-strip__label strong { color: var(--c-accent-coral); font-weight: var(--t-weight-bold); }
+.p-strip__law { font-size: 25pt; color: var(--c-accent-teal); margin: 10pt 0 0; }
+.p-strip__law .katex { color: var(--c-accent-teal); }
+.p-strip__note { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); margin: 9pt 0 0; line-height: 1.3; }
+.p-strip__bed { display: grid; place-items: center; min-width: 0; }
+.p-strip__bed img { height: 78mm; width: auto; max-width: 100%; display: block; mix-blend-mode: multiply; }
+.p-hero__cap {
+  font-family: var(--t-sans); font-size: var(--pt-caption); color: var(--fg-2);
+  line-height: 1.38; margin: 10mm 0 0; padding-top: 11pt;
+  border-top: 1.5px solid var(--c-border-strong);
+}
+.p-hero__cap b { color: var(--c-accent-teal); font-weight: var(--t-weight-semi); }
+
+/* Drop-vs-bubble comparison grid (the "why the split" payoff) */
+.p-compare { display: grid; gap: 0; }
+.p-compare__row {
+  display: grid; grid-template-columns: 0.78fr 1.18fr 1.18fr; gap: var(--p-gutter);
+  padding: 8pt 0; border-top: 1px solid var(--c-border); align-items: baseline;
+}
+.p-compare__row:first-child { border-top: 0; }
+.p-compare__row--head { border-bottom: 2.5px solid var(--c-border-strong); padding-bottom: 7pt; }
+.p-compare__rl {
+  font-family: var(--t-sans); font-weight: var(--t-weight-bold);
+  font-size: var(--pt-small); color: var(--fg-2);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.p-compare__c { font-family: var(--t-sans); font-size: 23pt; color: var(--fg-1); line-height: 1.28; }
+.p-compare__c strong { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
+.p-compare__row--head .p-compare__c {
+  font-family: var(--t-serif); font-size: 27pt; font-weight: var(--t-weight-bold); line-height: 1;
+}
+.p-compare__c--a { color: var(--c-accent-coral); }
+.p-compare__c--b { color: var(--c-accent-teal); }
+.p-compare__note { margin: 11pt 0 0; font-size: var(--pt-body); line-height: 1.34; }
 
 /* Card headings (scaling, synthesis) sit a step below section headings */
 .block--key .block__h { font-size: 31pt; }
@@ -153,7 +217,7 @@ function figure(fig: Figure, opts: RenderOptions): string {
     ? `<figcaption class="fig__cap">${mathify(fig.caption, opts)}</figcaption>`
     : "";
   return `<figure class="fig">
-  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:auto;max-width:100%;max-height:122mm;${blend}`)}</div>
+  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:auto;max-width:100%;max-height:84mm;${blend}`)}</div>
   ${cap}
 </figure>`;
 }
@@ -205,6 +269,31 @@ function renderBlock(block: Block, opts: RenderOptions): string {
   <p>${mathify(block.note, opts)}</p>
 </section>`;
     }
+    case "compare": {
+      const head = `<div class="p-compare__row p-compare__row--head">
+    <div class="p-compare__rl"></div>
+    <div class="p-compare__c p-compare__c--a">${mathify(block.columns[0], opts)}</div>
+    <div class="p-compare__c p-compare__c--b">${mathify(block.columns[1], opts)}</div>
+  </div>`;
+      const rows = block.rows
+        .map(
+          (r) => `<div class="p-compare__row">
+    <div class="p-compare__rl">${mathify(r.label, opts)}</div>
+    <div class="p-compare__c">${mathify(r.a, opts)}</div>
+    <div class="p-compare__c">${mathify(r.b, opts)}</div>
+  </div>`,
+        )
+        .join("\n");
+      const note = block.note ? `<p class="p-compare__note">${mathify(block.note, opts)}</p>` : "";
+      return `<section class="block block--key${band}">
+  ${heading(block.heading, opts)}
+  <div class="p-compare">
+  ${head}
+${rows}
+  </div>
+  ${note}
+</section>`;
+    }
     case "references": {
       const items = block.items.map((r) => `<li>${mathify(r, opts)}</li>`).join("");
       return `<section class="block${band}">
@@ -230,6 +319,7 @@ function renderHeader(content: PosterContent, opts: RenderOptions): string {
     .map((af) => `<sup>${af.mark}</sup>${af.text}`)
     .join(" &nbsp;·&nbsp; ");
   const subtitle = meta.subtitle ? `<p class="p-subtitle">${meta.subtitle}</p>` : "";
+  const collab = meta.collaborators ? `<p class="p-collab">${meta.collaborators}</p>` : "";
   return `<header class="p-header">
   <div class="p-headline">
     <p class="p-eyebrow">${meta.eyebrow}</p>
@@ -237,6 +327,7 @@ function renderHeader(content: PosterContent, opts: RenderOptions): string {
     ${subtitle}
     <p class="p-authors">${authors}</p>
     <p class="p-affil">${affil}</p>
+    ${collab}
   </div>
   <div class="p-logos">
     <div class="p-logos__lab">${logoImg(labMark, opts)}</div>
@@ -252,29 +343,32 @@ function logoImg(logo: Logo, opts: RenderOptions): string {
   return `<img src="${opts.resolveAsset(logo.src)}" alt="${escAttr(logo.alt)}"${cls}${style} />`;
 }
 
+function heroStrip(strip: PosterContent["hero"]["strips"][number], opts: RenderOptions): string {
+  const law = strip.scaling
+    ? `<div class="p-strip__law">${opts.renderMath(strip.scaling, false)}</div>`
+    : "";
+  const note = strip.note ? `<div class="p-strip__note">${mathify(strip.note, opts)}</div>` : "";
+  const blend = strip.figure.blend === false ? "" : "mix-blend-mode:multiply;";
+  return `<figure class="p-strip">
+    <div class="p-strip__rail">
+      <div class="p-strip__label">${mathify(strip.label, opts)}</div>
+      ${law}
+      ${note}
+    </div>
+    <div class="p-strip__bed">${img(strip.figure.src, strip.figure.alt, opts, blend)}</div>
+  </figure>`;
+}
+
 function renderHero(content: PosterContent, opts: RenderOptions): string {
   const { hero } = content;
-  const fblend = hero.figure.blend === false ? "" : "mix-blend-mode:multiply;";
-  const fcap = hero.figure.caption
-    ? `<figcaption class="fig__cap">${mathify(hero.figure.caption, opts)}</figcaption>`
-    : "";
-  const plots = hero.plots
-    ? `<figure class="p-hero__plots">
-      ${img(hero.plots.src, hero.plots.alt, opts, hero.plots.blend === false ? "" : "mix-blend-mode:multiply;")}
-      ${hero.plots.caption ? `<figcaption class="fig__cap">${mathify(hero.plots.caption, opts)}</figcaption>` : ""}
-    </figure>`
-    : "";
-  return `<section class="p-hero">
-  <figure class="fig" style="margin:0;">
-    <div class="fig__bed" style="padding:10mm;">
-      ${img(hero.figure.src, hero.figure.alt, opts, `width:auto;max-width:100%;max-height:168mm;${fblend}`)}
-    </div>
-    ${fcap}
-  </figure>
-  <div class="p-hero__side">
-    <p class="p-hero__lede">${mathify(hero.lede, opts)}</p>
-    ${plots}
+  const strips = hero.strips.map((s) => heroStrip(s, opts)).join("\n");
+  const cap = hero.caption ? `<p class="p-hero__cap">${mathify(hero.caption, opts)}</p>` : "";
+  return `<section class="p-hero p-hero--strips">
+  <p class="p-hero__lede">${mathify(hero.lede, opts)}</p>
+  <div class="p-strips">
+${strips}
   </div>
+  ${cap}
 </section>`;
 }
 
@@ -313,7 +407,11 @@ export function renderPoster(content: PosterContent, opts: RenderOptions): strin
   const refsBlock = full.find((b) => b.kind === "references");
   const ackBlock = full.find((b) => b.kind === "acknowledgements");
   const emphasis = full.filter((b) => b.kind !== "references" && b.kind !== "acknowledgements");
-  const emphasisHtml = emphasis.map((b) => renderBlock(b, opts)).join("\n");
+  const hasPlace = (b: Block): b is Block & { place?: "lead" | "tail" } => "place" in b;
+  const leadBlocks = emphasis.filter((b) => hasPlace(b) && b.place === "lead");
+  const tailBlocks = emphasis.filter((b) => !(hasPlace(b) && b.place === "lead"));
+  const leadHtml = leadBlocks.map((b) => renderBlock(b, opts)).join("\n");
+  const emphasisHtml = tailBlocks.map((b) => renderBlock(b, opts)).join("\n");
   const endmatterHtml = refsBlock || ackBlock
     ? `<div class="p-endmatter">
 ${refsBlock ? `<div class="p-endmatter__refs">${renderBlock(refsBlock, opts)}</div>` : ""}
@@ -346,6 +444,7 @@ ${POSTER_EXTRAS}
     <div class="poster__inner">
 ${renderHeader(content, opts)}
 ${renderHero(content, opts)}
+${leadHtml}
       <div class="p-body p-cols">
         <div class="p-col">
 ${left}
