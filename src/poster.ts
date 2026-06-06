@@ -2,19 +2,15 @@
  * Renderer: PosterContent -> standalone A0 HTML, on the CoMPhy Lab design system.
  *
  * Pure string composition. All file I/O (inlining CSS/JS and images as data
- * URIs) is injected via RenderOptions so this module stays side-effect free and
- * testable. Layout = the design system's hero-band template
- * (`.poster--hero`): full-width header + graphical-abstract hero, then two
- * explicit columns whose blocks are placed by their `column` field.
+ * URIs) is injected via RenderOptions so this module stays side-effect free.
+ *
+ * Layout = the design system's hero-band template with two refinements:
+ *   - the hero's side column stacks the lede over an optional plots figure;
+ *   - blocks with column:"full" render as full-width bands below the two
+ *     columns (a synthesis band, then a references|acknowledgements endmatter).
  */
 
-import type {
-  Block,
-  Chip,
-  Figure,
-  Logo,
-  PosterContent,
-} from "./types.js";
+import type { Block, Chip, Figure, Logo, PosterContent } from "./types.js";
 
 export interface RenderOptions {
   /** Map a repo-relative asset path to its final src (typically a data URI). */
@@ -32,12 +28,17 @@ const FONTS_HREF =
 
 /** Poster-specific styling on top of the design system (references tokens only). */
 const POSTER_EXTRAS = `
-/* Outcome verdict chip pinned under a section */
+/* Tighten the A0 rhythm — this poster is content-dense, so trim the outer
+   margin, the inter-block gap and the column gutter to keep everything on one
+   sheet without overflow. */
+:root { --p-pad: 32mm; --p-block: 15mm; --p-gutter: 22mm; }
+
+/* Outcome verdict chip pinned under a section — the only coral/teal call-outs */
 .p-outcome {
   display: flex; align-items: center; gap: 12pt;
   font-family: var(--t-sans); font-weight: var(--t-weight-bold);
-  font-size: var(--pt-body); line-height: 1.25;
-  border-radius: var(--r-sm); padding: 12pt 20pt; margin: 16pt 0 0;
+  font-size: var(--pt-body); line-height: 1.2;
+  border-radius: var(--r-sm); padding: 9pt 18pt; margin: 12pt 0 0;
 }
 .p-outcome::before { content: "→"; font-weight: 800; font-size: 1.1em; }
 .p-outcome--coral {
@@ -54,15 +55,15 @@ const POSTER_EXTRAS = `
 /* Scaling-law breadcrumb */
 .p-formula {
   font-family: var(--t-mono); font-weight: 500;
-  font-size: 38pt; line-height: 1.1; letter-spacing: 0.01em;
+  font-size: 36pt; line-height: 1.1; letter-spacing: 0.01em;
   color: var(--c-accent-teal); margin: 0 0 12pt;
 }
 .p-formula sub, .p-formula sup { font-size: 0.6em; }
 
 .fig__bed { background: var(--c-paper); display: grid; place-items: center; padding: 8mm; }
 
-/* Distribute column slack evenly so both columns reach the footer cleanly */
-.p-cols .p-col { justify-content: space-between; }
+/* Columns: top-pack with a uniform gap (the .p-col gap drives spacing) */
+.p-cols .p-col { justify-content: flex-start; }
 .p-col > * { margin-bottom: 0; }
 
 /* Partner-mark treatments so each sits cleanly on warm paper */
@@ -70,28 +71,44 @@ const POSTER_EXTRAS = `
 :root[data-theme="light"] .p-partner--invert { filter: invert(1); opacity: 0.8; }
 :root[data-theme="dark"]  .p-partner--multiply { mix-blend-mode: screen; }
 
-/* Header lab mark — the lab's drop-impact signature */
-.p-logos__lab img { height: 62mm; }
+/* Header lab mark — smaller and vertically centred against the headline */
+.p-header { align-items: center; }
+.p-logos__lab img { height: 52mm; }
 
-/* Hero: top-align the lede so it starts level with the figure, not floating
-   in the vertical centre of the tall graphical abstract. */
+/* Hero: lede over the h(t) scaling plots in the side column */
 .p-hero { align-items: start; }
-.p-hero__lede { padding-top: 4mm; }
+.p-hero__side { display: flex; flex-direction: column; gap: var(--p-block); min-height: 0; }
+.p-hero__lede { padding-top: 2mm; }
+.p-hero__plots { margin: 0; }
+.p-hero__plots img { width: 100%; height: auto; display: block; }
+.p-hero__plots .fig__cap { padding: 10pt 0 0; border-top: 1px solid var(--c-border); }
+
+/* Card headings (scaling, synthesis) sit a step below section headings */
+.block--key .block__h { font-size: 31pt; }
+
+/* Full-width bands (direct children of poster__inner) */
+.poster__inner > .block { margin: 0; }
+.p-endmatter { display: flex; gap: var(--p-gutter); align-items: stretch; }
+.p-endmatter__refs { flex: 2.3; min-width: 0; }
+.p-endmatter__ack  { flex: 1; min-width: 0; }
+.p-endmatter .block { margin: 0; }
+
+/* References get room: two columns, looser leading */
+.block--band .refs { columns: 2; column-gap: var(--p-gutter); }
+.block--band .refs li { break-inside: avoid; margin-bottom: 13pt; }
+
+/* Synthesis band: three takeaways across the full width */
+.block--key.block--band ul { columns: 3; column-gap: var(--p-gutter); margin: 0; }
+.block--key.block--band li { break-inside: avoid; margin-bottom: 0; }
 
 /* Print fix: the base print rule collapses .poster to height:100% of a
-   height-less .stage, so the poster shrinks to content height and the footer
-   falls off the page. Re-assert true A0 so the body fills the sheet and the
-   footer pins to the bottom. */
+   height-less .stage, so it shrinks to content height and the footer falls off.
+   Re-assert true A0 so the body fills the sheet and the footer pins to the bottom. */
 @media print {
   html, body { margin: 0 !important; height: auto !important; background: var(--c-surface-strong) !important; }
   .stage { position: static !important; height: auto !important; overflow: visible !important; background: none !important; }
   .stage::before { display: none !important; }
-  .poster {
-    position: static !important;
-    transform: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-  }
+  .poster { position: static !important; transform: none !important; box-shadow: none !important; margin: 0 !important; }
   .poster--portrait  { width: 841mm !important;  height: 1189mm !important; }
   .poster--landscape { width: 1189mm !important; height: 841mm  !important; }
 }
@@ -115,29 +132,23 @@ function img(src: string, alt: string, opts: RenderOptions, style = ""): string 
   return `<img src="${opts.resolveAsset(src)}" alt="${escAttr(alt)}"${s} />`;
 }
 
-function figure(fig: Figure, opts: RenderOptions, grow = false): string {
+function figure(fig: Figure, opts: RenderOptions): string {
   const blend = fig.blend === false ? "" : "mix-blend-mode:multiply;";
   const cap = fig.caption
     ? `<figcaption class="fig__cap">${fig.caption}</figcaption>`
     : "";
-  if (grow) {
-    return `<figure class="fig fig--grow">
-  <div class="fig__bed">${img(fig.src, fig.alt, opts, blend)}</div>
-  ${cap}
-</figure>`;
-  }
   return `<figure class="fig">
-  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:100%;height:auto;${blend}`)}</div>
+  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:auto;max-width:100%;max-height:142mm;${blend}`)}</div>
   ${cap}
 </figure>`;
 }
 
-function heading(num: string | undefined, text: string): string {
-  const n = num ? `<span class="block__num">${num}</span> ` : "";
-  return `<h2 class="block__h">${n}${text}</h2>`;
+function heading(text: string): string {
+  return `<h2 class="block__h">${text}</h2>`;
 }
 
 function renderBlock(block: Block, opts: RenderOptions): string {
+  const band = block.column === "full" ? " block--band" : "";
   switch (block.kind) {
     case "section": {
       const chips = block.chips?.length
@@ -147,13 +158,13 @@ function renderBlock(block: Block, opts: RenderOptions): string {
       const items = block.items?.length
         ? `<ul>${block.items.map((li) => `<li>${li}</li>`).join("")}</ul>`
         : "";
-      const fig = block.figure ? figure(block.figure, opts, block.grow) : "";
+      const fig = block.figure ? figure(block.figure, opts) : "";
       const outcome = block.outcome
         ? `<p class="p-outcome p-outcome--${block.outcome.tone}">${block.outcome.text}</p>`
         : "";
-      const cls = block.grow ? "block block--grow" : "block";
-      return `<section class="${cls}">
-  ${heading(block.num, block.heading)}
+      const grow = block.grow ? " block--grow" : "";
+      return `<section class="block${grow}${band}">
+  ${heading(block.heading)}
   ${chips}
   ${body}
   ${items}
@@ -166,29 +177,29 @@ function renderBlock(block: Block, opts: RenderOptions): string {
       const items = block.items?.length
         ? `<ul>${block.items.map((li) => `<li>${li}</li>`).join("")}</ul>`
         : "";
-      return `<section class="block block--key">
-  ${heading(undefined, block.heading)}
+      return `<section class="block block--key${band}">
+  ${heading(block.heading)}
   ${body}
   ${items}
 </section>`;
     }
     case "scaling": {
-      return `<section class="block block--key">
-  ${heading(undefined, block.heading)}
+      return `<section class="block block--key${band}">
+  ${heading(block.heading)}
   <div class="p-formula">${block.formula}</div>
   <p>${block.note}</p>
 </section>`;
     }
     case "references": {
       const items = block.items.map((r) => `<li>${r}</li>`).join("");
-      return `<section class="block">
-  ${heading(block.num, block.heading)}
+      return `<section class="block${band}">
+  ${heading(block.heading)}
   <ol class="refs">${items}</ol>
 </section>`;
     }
     case "acknowledgements": {
-      return `<section class="block">
-  ${heading(block.num, block.heading)}
+      return `<section class="block${band}">
+  ${heading(block.heading)}
   <p class="ack">${block.body}</p>
 </section>`;
     }
@@ -203,9 +214,7 @@ function renderHeader(content: PosterContent, opts: RenderOptions): string {
   const affil = meta.affiliations
     .map((af) => `<sup>${af.mark}</sup>${af.text}`)
     .join(" &nbsp;·&nbsp; ");
-  const subtitle = meta.subtitle
-    ? `<p class="p-subtitle">${meta.subtitle}</p>`
-    : "";
+  const subtitle = meta.subtitle ? `<p class="p-subtitle">${meta.subtitle}</p>` : "";
   return `<header class="p-header">
   <div class="p-headline">
     <p class="p-eyebrow">${meta.eyebrow}</p>
@@ -230,18 +239,27 @@ function logoImg(logo: Logo, opts: RenderOptions): string {
 
 function renderHero(content: PosterContent, opts: RenderOptions): string {
   const { hero } = content;
-  const blend = hero.figure.blend === false ? "" : "mix-blend-mode:multiply;";
-  const cap = hero.figure.caption
+  const fblend = hero.figure.blend === false ? "" : "mix-blend-mode:multiply;";
+  const fcap = hero.figure.caption
     ? `<figcaption class="fig__cap">${hero.figure.caption}</figcaption>`
+    : "";
+  const plots = hero.plots
+    ? `<figure class="p-hero__plots">
+      ${img(hero.plots.src, hero.plots.alt, opts, hero.plots.blend === false ? "" : "mix-blend-mode:multiply;")}
+      ${hero.plots.caption ? `<figcaption class="fig__cap">${hero.plots.caption}</figcaption>` : ""}
+    </figure>`
     : "";
   return `<section class="p-hero">
   <figure class="fig" style="margin:0;">
     <div class="fig__bed" style="padding:10mm;">
-      ${img(hero.figure.src, hero.figure.alt, opts, `width:auto;max-width:100%;max-height:250mm;${blend}`)}
+      ${img(hero.figure.src, hero.figure.alt, opts, `width:auto;max-width:100%;max-height:198mm;${fblend}`)}
     </div>
-    ${cap}
+    ${fcap}
   </figure>
-  <p class="p-hero__lede">${hero.lede}</p>
+  <div class="p-hero__side">
+    <p class="p-hero__lede">${hero.lede}</p>
+    ${plots}
+  </div>
 </section>`;
 }
 
@@ -271,17 +289,24 @@ function renderFooter(content: PosterContent, opts: RenderOptions): string {
 
 export function renderPoster(content: PosterContent, opts: RenderOptions): string {
   const { meta } = content;
-  const left = content.blocks
-    .filter((b) => b.column === "left")
-    .map((b) => renderBlock(b, opts))
-    .join("\n");
-  const right = content.blocks
-    .filter((b) => b.column === "right")
-    .map((b) => renderBlock(b, opts))
-    .join("\n");
+  const inCol = (c: "left" | "right") =>
+    content.blocks.filter((b) => b.column === c).map((b) => renderBlock(b, opts)).join("\n");
+  const left = inCol("left");
+  const right = inCol("right");
 
-  const pageSize =
-    meta.orientation === "landscape" ? "1189mm 841mm" : "841mm 1189mm";
+  const full = content.blocks.filter((b) => b.column === "full");
+  const refsBlock = full.find((b) => b.kind === "references");
+  const ackBlock = full.find((b) => b.kind === "acknowledgements");
+  const emphasis = full.filter((b) => b.kind !== "references" && b.kind !== "acknowledgements");
+  const emphasisHtml = emphasis.map((b) => renderBlock(b, opts)).join("\n");
+  const endmatterHtml = refsBlock || ackBlock
+    ? `<div class="p-endmatter">
+${refsBlock ? `<div class="p-endmatter__refs">${renderBlock(refsBlock, opts)}</div>` : ""}
+${ackBlock ? `<div class="p-endmatter__ack">${renderBlock(ackBlock, opts)}</div>` : ""}
+</div>`
+    : "";
+
+  const pageSize = meta.orientation === "landscape" ? "1189mm 841mm" : "841mm 1189mm";
 
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -314,6 +339,8 @@ ${left}
 ${right}
         </div>
       </div>
+${emphasisHtml}
+${endmatterHtml}
 ${renderFooter(content, opts)}
     </div>
   </article>

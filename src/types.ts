@@ -8,7 +8,8 @@
  */
 
 export type Orientation = "portrait" | "landscape";
-export type Column = "left" | "right";
+/** "full" blocks span both columns in a band below the two-column body. */
+export type Column = "left" | "right" | "full";
 export type ChipTone = "purple" | "teal";
 export type OutcomeTone = "coral" | "teal";
 /** How a logo sits on warm paper without showing a white box. */
@@ -62,13 +63,14 @@ export interface Hero {
   figure: Figure;
   /** Serif lede beside the hero figure; `<strong>` → coral. */
   lede: string;
+  /** Optional figure stacked under the lede (e.g. the h(t) scaling plots). */
+  plots?: Figure;
 }
 
 /** A standard numbered section block. */
 export interface SectionBlock {
   kind: "section";
   column: Column;
-  num?: string;
   heading: string;
   chips?: Chip[];
   body?: string[];
@@ -102,7 +104,6 @@ export interface ScalingBlock {
 export interface ReferencesBlock {
   kind: "references";
   column: Column;
-  num?: string;
   heading: string;
   /** Each entry is HTML. */
   items: string[];
@@ -111,7 +112,6 @@ export interface ReferencesBlock {
 export interface AckBlock {
   kind: "acknowledgements";
   column: Column;
-  num?: string;
   heading: string;
   body: string;
 }
