@@ -7,8 +7,21 @@ records the narrative and design decisions.
 
 The science draws on Verschuur, Oratis, Sanjay & Snoeijer, *How elasticity
 affects bubble pinch-off* (arXiv:2511.20075), but the poster leads with the
-phenomenon, not the paper. Equations are real LaTeX rendered by KaTeX; author the
-maths in `$…$` / `$$…$$` (and the raw-LaTeX `scaling` / `compare` fields).
+phenomenon, not the paper. Phrasing, the singularity definition, the polymer
+schematic and the "race between the elastic stress and the drive" framing are
+lifted from Vatsal's ISMC talk (`docs/ISMC-talk-15mins.pdf`). Equations are real
+LaTeX rendered by KaTeX; author the maths in `$…$` / `$$…$$` (and the raw-LaTeX
+`scaling` / `compare` fields).
+
+The mechanism is framed as a **race** (the talk's argument), which is sharper
+than "strong vs weak": the elastic stress competes with whatever *drives* the
+pinch. Drop — $\sigma_{zz}\sim G(h_0/h)^4$ diverges faster than the capillary
+drive $\gamma\kappa\sim\gamma/h\sim(h_0/h)$, so it always wins and, in the
+perfectly elastic limit $\lambda\to\infty$, the singularity is removed. Bubble —
+$\sigma_{rr}\sim G(h_0/h)^2$ only ties the inertial drive $\sigma_I\sim\rho\dot
+h^2\sim(h_0/h)^2$ and stays smaller, so the singularity survives with or without
+memory. $\lambda$ (relaxation time) is the fluid's memory; $\lambda\to\infty$ is
+"perfect memory".
 
 ## Narrative (phenomenon → twist → why)
 
@@ -65,6 +78,10 @@ used in the layout.
 - **Experimental two-row figures** (drop / bubble columns) — Newtonian row vs
   dilute-polymer row; this is the elasticity evidence. Capped to a shared height
   so the two columns align.
+- **Polymer schematic** (`pinchoff_schematic.png`, in the "why" band) — lifted
+  from the ISMC talk: relaxed blue coils in the bulk, stretched red chains at the
+  neck (axial for the drop, sideways for the bubble). Shows the stretching the
+  photos can't. Cropped from `docs/ISMC-talk-15mins.pdf` p.11.
 - **Unused** — `numerical_snapshots.png` (the old paper-style graphical-abstract
   hero) and `hero_scaling.png` (the schematic h(t) plots from
   `scripts/make_scaling_plots.py`) are kept in `assets/` but no longer placed in

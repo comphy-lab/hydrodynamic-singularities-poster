@@ -44,7 +44,7 @@ export const poster: PosterContent = {
 
   hero: {
     lede:
-      "A <strong>singularity</strong> is where a smooth flow runs out of room: a finite quantity racing to infinity in a finite time. As a drop or a bubble pinches off, the neck radius $h$ collapses to zero and the shape turns self-similar, $h \\sim (t_0-t)^{\\alpha}$ — a universal form fixed only by the local balance of inertia, surface tension and viscosity. The flow <strong>forgets how it began</strong>. Singularities erase a fluid's memory.",
+      "A <strong>singularity</strong> is when a smooth physical process blows up — something finite becomes infinite in a finite time or at a finite place. As a drop or a bubble pinches off, the neck radius $h$ races to zero and the shape turns self-similar, $h \\sim (t_0-t)^{\\alpha}$: a universal form set only by the local balance of inertia, surface tension and viscosity. The flow <strong>forgets how it began</strong>. Singularities erase a fluid's memory.",
     strips: [
       {
         label: "A <strong>drop</strong> pinches off",
@@ -77,7 +77,7 @@ export const poster: PosterContent = {
       place: "lead",
       heading: "Elasticity is memory",
       body: [
-        "Dissolve a few polymer chains and the liquid gains a memory — each chain stores its own stretching history over a relaxation time. So elasticity should hand back the memory the singularity just erased. It does for a drop, yet a dilute bubble pinches off as if the polymer were not there. Why the difference?",
+        "Dissolve a few polymer chains and the liquid gains a memory — each chain stores its stretching history over a relaxation time $\\lambda$. Push to the perfectly elastic limit ($\\lambda \\to \\infty$, nothing is forgotten) and ask whether memory can outlast the singularity. It does for a drop, yet a dilute bubble pinches off as if the polymer were not there. Why the difference?",
       ],
     },
 
@@ -87,8 +87,8 @@ export const poster: PosterContent = {
       column: "left",
       heading: "The drop remembers",
       body: [
-        "A water drop reaches a genuine finite-time singularity. The pinch is capillary-driven and the neck is a slender axial thread, so the polymers stretch <em>along</em> the axis as it closes.",
-        "That alignment makes the elastic stress diverge strongly, $\\sigma_{zz} \\sim G\\,(h_0/h)^{4}$. It outruns the capillary pull, arrests the pinch and draws the neck into a long-lived <strong>beads-on-a-string</strong> filament — alive for hundreds of milliseconds even at a dilute $c=1/32$ wt%.",
+        "A water drop reaches a genuine finite-time singularity. The pinch is capillary-driven, so the neck thins into a slender axial thread and the polymers stretch <em>along</em> it as it closes.",
+        "The elastic stress then diverges as $\\sigma_{zz} \\sim G\\,(h_0/h)^{4}$ — faster than the capillary drive $\\gamma\\kappa \\sim \\gamma/h$ it fights. It must win: the collapse is arrested into a long-lived <strong>beads-on-a-string</strong> thread, and in the perfectly elastic limit the singularity is removed altogether.",
       ],
       figure: {
         src: "assets/figures/drop_experiment_two_rows.png",
@@ -105,8 +105,8 @@ export const poster: PosterContent = {
       column: "right",
       heading: "The bubble forgets anyway",
       body: [
-        "A bubble neck pinches just as sharply, $h \\sim (t_0-t)^{1/2}$, but the collapse is inertia-driven and the cavity closes <em>radially</em>, so the polymers stretch sideways rather than along a thread.",
-        "Stretched the wrong way the elastic stress diverges only weakly, $\\sigma_{rr} \\sim G\\,(h_0/h)^{2}$, and stays subdominant to the liquid's inertia. A dilute solution cannot organise a filament; the pinch-off stays water-like. A thread needs <strong>high concentration</strong>, and even then its fate hangs on the needle size.",
+        "A bubble neck pinches just as sharply, $h \\sim (t_0-t)^{1/2}$, but the collapse is driven by the liquid's inertia and the cavity closes <em>radially</em>, so the polymers stretch sideways rather than along a thread.",
+        "Now the elastic stress diverges only as $\\sigma_{rr} \\sim G\\,(h_0/h)^{2}$ — the <em>same</em> rate as the inertial drive $\\sigma_I \\sim \\rho\\dot h^{2}$. A fair race it cannot win: it stays subdominant, so the bubble reaches its singularity <strong>with or without memory</strong>. A thread needs high concentration, and even then its fate hangs on the needle size.",
       ],
       figure: {
         src: "assets/figures/bubble_experiment_two_rows.png",
@@ -122,30 +122,36 @@ export const poster: PosterContent = {
       kind: "compare",
       column: "full",
       heading: "Why elasticity picks sides",
+      figure: {
+        src: "assets/figures/pinchoff_schematic.png",
+        alt: "Schematic of drop and bubble pinch-off with polymer chains: relaxed coils in the bulk, stretched red chains at the neck",
+        caption:
+          "Polymers (blue coils) stretch where the neck thins (red): <b>along</b> the drop's axial thread, but only <b>sideways</b> across the bubble's neck.",
+      },
       columns: ["Drop", "Bubble"],
       rows: [
         {
           label: "What drives the pinch",
-          a: "surface tension (capillary)",
-          b: "the outer liquid's inertia",
+          a: "surface tension, $\\gamma\\kappa \\sim \\gamma/h$",
+          b: "the liquid's inertia, $\\sigma_I \\sim \\rho\\dot h^{2}$",
         },
         {
           label: "Neck geometry",
-          a: "a slender <strong>axial</strong> thread — polymers stretch along it",
-          b: "a <strong>radial</strong> cavity — polymers stretch sideways",
+          a: "a slender <strong>axial</strong> thread",
+          b: "a <strong>radial</strong> cavity collapse",
         },
         {
-          label: "Elastic stress",
-          a: "$\\sigma_{zz}\\sim G(h_0/h)^{4}$ — strong",
-          b: "$\\sigma_{rr}\\sim G(h_0/h)^{2}$ — weak",
+          label: "Elastic stress builds as",
+          a: "$\\sigma_{zz}\\sim G(h_0/h)^{4}$",
+          b: "$\\sigma_{rr}\\sim G(h_0/h)^{2}$",
         },
         {
-          label: "Does memory win?",
-          a: "yes — it overtakes the drive and grows a thread",
-          b: "no — it stays subdominant; no thread forms",
+          label: "…vs the drive → fate",
+          a: "<strong>faster</strong> (4 vs 1): a thread; singularity removed",
+          b: "<strong>same</strong> rate (2 vs 2): it pinches; singularity survives",
         },
       ],
-      note: "Two extra powers of $(h_0/h)$ is the whole story: along a drop's thread the elastic stress overtakes the drive, while across a bubble's cavity it stays a bystander (the elastocapillary number $\\mathrm{Ec}=G h_0/\\gamma$ sets the balance). Reading which singularities a pinch of elasticity can rewrite is how we learn to control breakup — threads, sprays and aerosols.",
+      note: "It is a race between the elastic stress and whatever drives the pinch: the drop's stress outgrows its capillary drive, the bubble's only ties its inertial drive. Same additive, opposite fate — and reading which singularities a touch of elasticity can rewrite is how we learn to control breakup: inkjet printing, sprays and aerosols.",
     },
 
     // ---------- ENDMATTER ----------

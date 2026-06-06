@@ -33,7 +33,7 @@ const POSTER_EXTRAS = `
 /* Tighten the A0 rhythm — this poster is content-dense, so trim the outer
    margin, the inter-block gap and the column gutter to keep everything on one
    sheet without overflow. */
-:root { --p-pad: 30mm; --p-block: 11mm; --p-gutter: 22mm; }
+:root { --p-pad: 30mm; --p-block: 10mm; --p-gutter: 22mm; }
 
 /* Header — tighten the lockup so the title block doesn't eat the sheet */
 .p-header { padding-bottom: 11mm; }
@@ -127,7 +127,7 @@ const POSTER_EXTRAS = `
 .p-strip__law .katex { color: var(--c-accent-teal); }
 .p-strip__note { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); margin: 9pt 0 0; line-height: 1.3; }
 .p-strip__bed { display: grid; place-items: center; min-width: 0; }
-.p-strip__bed img { height: 78mm; width: auto; max-width: 100%; display: block; mix-blend-mode: multiply; }
+.p-strip__bed img { height: 72mm; width: auto; max-width: 100%; display: block; mix-blend-mode: multiply; }
 .p-hero__cap {
   font-family: var(--t-sans); font-size: var(--pt-caption); color: var(--fg-2);
   line-height: 1.38; margin: 10mm 0 0; padding-top: 11pt;
@@ -156,6 +156,13 @@ const POSTER_EXTRAS = `
 .p-compare__c--a { color: var(--c-accent-coral); }
 .p-compare__c--b { color: var(--c-accent-teal); }
 .p-compare__note { margin: 11pt 0 0; font-size: var(--pt-body); line-height: 1.34; }
+/* Compare band with the polymer schematic to the left of the grid */
+.p-compare-wrap { display: grid; grid-template-columns: auto 1fr; gap: var(--p-gutter); align-items: center; }
+.p-compare-main { min-width: 0; }
+.p-compare__fig { margin: 0; display: grid; place-items: center; }
+.p-compare__fig img { height: 82mm; width: auto; max-width: 100%; display: block; }
+.p-compare__fig .fig__cap { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); line-height: 1.32; padding: 9pt 0 0; border: 0; max-width: 150mm; }
+.p-compare__fig .fig__cap b { color: var(--c-accent-teal); font-weight: var(--t-weight-semi); }
 
 /* Card headings (scaling, synthesis) sit a step below section headings */
 .block--key .block__h { font-size: 31pt; }
@@ -219,7 +226,7 @@ function figure(fig: Figure, opts: RenderOptions): string {
     ? `<figcaption class="fig__cap">${mathify(fig.caption, opts)}</figcaption>`
     : "";
   return `<figure class="fig">
-  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:auto;max-width:100%;max-height:84mm;${blend}`)}</div>
+  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:auto;max-width:100%;max-height:80mm;${blend}`)}</div>
   ${cap}
 </figure>`;
 }
@@ -287,13 +294,30 @@ function renderBlock(block: Block, opts: RenderOptions): string {
         )
         .join("\n");
       const note = block.note ? `<p class="p-compare__note">${mathify(block.note, opts)}</p>` : "";
-      return `<section class="block block--key${band}">
-  ${heading(block.heading, opts)}
-  <div class="p-compare">
+      const grid = `<div class="p-compare">
   ${head}
 ${rows}
   </div>
-  ${note}
+  ${note}`;
+      if (block.figure) {
+        const fcap = block.figure.caption
+          ? `<figcaption class="fig__cap">${mathify(block.figure.caption, opts)}</figcaption>`
+          : "";
+        const fblend = block.figure.blend === false ? "" : "mix-blend-mode:multiply;";
+        return `<section class="block block--key${band}">
+  ${heading(block.heading, opts)}
+  <div class="p-compare-wrap">
+    <figure class="p-compare__fig">
+      ${img(block.figure.src, block.figure.alt, opts, fblend)}
+      ${fcap}
+    </figure>
+    <div class="p-compare-main">${grid}</div>
+  </div>
+</section>`;
+      }
+      return `<section class="block block--key${band}">
+  ${heading(block.heading, opts)}
+  ${grid}
 </section>`;
     }
     case "references": {

@@ -128,6 +128,8 @@ export interface CompareBlock {
   rows: { label: string; a: string; b: string }[];
   /** Optional closing line under the grid. */
   note?: string;
+  /** Optional illustration rendered to the left of the grid. */
+  figure?: Figure;
   /** For `column:"full"` bands: render before ("lead") or after ("tail", default) the body columns. */
   place?: "lead" | "tail";
 }
