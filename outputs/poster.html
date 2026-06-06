@@ -894,6 +894,7 @@ body.embed .toolbar { display: none; }
 
 /* Header — tighten the lockup so the title block doesn't eat the sheet */
 .p-header { padding-bottom: 11mm; }
+.p-title { font-size: 92pt; }
 .p-eyebrow { margin-bottom: 8pt; }
 .p-subtitle { max-width: 62ch; font-size: 24pt; margin-top: 11pt; }
 .p-authors { margin-top: 9pt; }
@@ -949,9 +950,10 @@ body.embed .toolbar { display: none; }
 :root[data-theme="light"] .p-partner--invert { filter: invert(1); opacity: 0.8; }
 :root[data-theme="dark"]  .p-partner--multiply { mix-blend-mode: screen; }
 
-/* Header lab mark — smaller and vertically centred against the headline */
+/* Header lab mark — the drop-splash anchors the right of the masthead and
+   balances the dense title block (it's on-theme: a splashing drop). */
 .p-header { align-items: center; }
-.p-logos__lab img { height: 52mm; }
+.p-logos__lab img { height: 104mm; }
 
 /* Hero: the phenomenon first — two stacked pinch-off filmstrips (drop, then
    bubble), each with a left rail (what it is + its self-similar scaling). */
