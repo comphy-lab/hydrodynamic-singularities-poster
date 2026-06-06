@@ -4,25 +4,30 @@ The poster is built on the **CoMPhy Lab design system** (hero-band A0 layout).
 Content lives in [`src/content.ts`](../src/content.ts); this file records the
 narrative and the design decisions behind it.
 
+Based on Verschuur, Oratis, Sanjay & Snoeijer, *How elasticity affects bubble
+pinch-off* (arXiv:2511.20075, submitted to *Phys. Rev. Fluids*). Equations are
+real LaTeX rendered by KaTeX; author the maths in `$…$` / `$$…$$` in
+`src/content.ts` (scaling/stress block `formula` fields are raw LaTeX).
+
 ## Narrative
 
 A singularity is a smooth physical process that blows up — a finite quantity
-becoming infinite in a finite time or place. The poster makes the **memory-loss**
-idea explicit: close to the singularity the flow becomes universal and
-self-similar, forgetting its initial condition.
+becoming infinite in a finite time or place. Close to it the flow becomes
+universal and self-similar, forgetting its initial condition: a Newtonian neck
+thins as `h ∼ (t₀−t)^{2/3}` for a drop and `(t₀−t)^{1/2}` for a bubble.
 
-The spine is the **drop vs bubble** contrast:
+The spine is the **drop vs bubble** contrast, set by *how strongly the polymer
+stress diverges*:
 
-- **Drops** — a Newtonian neck pinches to a true finite-time singularity. Add
-  polymers and the singularity is *arrested*: a persistent filament,
-  beads-on-a-string. *Elasticity changes the route.*
-- **Bubbles** — a Newtonian neck pinches just as sharply. Add the same polymers
-  and the near-singular sequence is almost unchanged. *Elasticity leaves the
-  singularity intact.*
+- **Drops** — the stretching is axial and capillary, so the elastic stress
+  diverges strongly, `σ_zz ∼ G(h₀/h)⁴`. Even a dilute polymer grows a persistent
+  thread (the route to beads-on-a-string) and arrests pinch-off.
+- **Bubbles** — the stretching is radial and inertial, so the stress diverges
+  only as `σ_rr ∼ G(h₀/h)²`. In the dilute limit no thread forms and the
+  pinch-off stays Newtonian-like; a thread needs high polymer concentration
+  (beyond Oldroyd-B) and is then sensitive to the needle size.
 
-Equations are kept sparse: one scaling-law breadcrumb
-(`h_min ∼ (t₀ − t)^α`, self-similar collapse under rescaling by the local neck
-radius).
+Captured by direct simulation (Basilisk C) and an Oldroyd-B model.
 
 ## Layout mapping (hero-band)
 

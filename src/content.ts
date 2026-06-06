@@ -1,17 +1,21 @@
 /**
  * Hydrodynamic Singularities — poster content.
  *
- * This is the one file to edit for wording, figures and references.
+ * Built around Verschuur, Oratis, Sanjay & Snoeijer, "How elasticity affects
+ * bubble pinch-off" (arXiv:2511.20075, submitted to Phys. Rev. Fluids).
+ *
  * The science: a singularity is where a smooth free-surface flow blows up and
- * forgets its past; near it the dynamics are universal and self-similar. The
- * canonical contrast is drop pinch-off (polymers arrest the singularity into
- * beads-on-a-string) versus bubble pinch-off (polymers leave it intact).
+ * forgets its past; near it the dynamics are universal and self-similar. A
+ * Newtonian drop neck thins as (t0-t)^{2/3}, a bubble as (t0-t)^{1/2}. A dilute
+ * polymer arrests the DROP — the elastic stress diverges strongly,
+ * sigma_zz ~ G(h0/h)^4, growing a beads-on-a-string thread — but barely touches
+ * the BUBBLE, whose stress diverges only as sigma_rr ~ G(h0/h)^2, so no thread
+ * forms in dilute solution.
  *
- * Layout: two parallel columns (concept | scaling, then drop | bubble), a
- * full-width synthesis band, and a full-width references/acknowledgements band.
- *
- * Inline HTML (see src/types.ts): <strong> = coral and is reserved for the ONE
- * key noun per block; use <em> for softer emphasis, <code> for symbols.
+ * Inline HTML (src/types.ts): <strong> = coral, reserved for the ONE key noun
+ * per block; <em> for softer emphasis. LaTeX goes in $…$ (inline) or $$…$$
+ * (display) and is rendered by KaTeX at build time. Scaling/stress block
+ * `formula` fields are raw LaTeX (rendered as display math, no $ needed).
  */
 
 import type { PosterContent } from "./types.js";
@@ -22,13 +26,16 @@ export const poster: PosterContent = {
     eyebrow: "Physics Staff–Student Research Poster · Durham University · 12 June 2026",
     title: "Hydrodynamic singularities",
     subtitle:
-      "When a free surface pinches off, the flow forgets its past — and a drop and a bubble meet the singularity on opposite terms.",
-    authors: [{ name: "Vatsal Sanjay", marks: ["1"] }],
+      "When a free surface pinches off, the flow forgets its past. A pinch of polymer rewrites the ending — but only for a drop, not a dilute bubble.",
+    authors: [
+      { name: "Coen I. Verschuur", marks: ["1"] },
+      { name: "Alexandros T. Oratis", marks: ["1"] },
+      { name: "Vatsal Sanjay", marks: ["1", "2"] },
+      { name: "Jacco H. Snoeijer", marks: ["1"] },
+    ],
     affiliations: [
-      {
-        mark: "1",
-        text: "Computational Multiphase Physics (CoMPhy) Lab, Department of Physics, Durham University",
-      },
+      { mark: "1", text: "Physics of Fluids, University of Twente" },
+      { mark: "2", text: "Computational Multiphase Physics (CoMPhy) Lab, Department of Physics, Durham University" },
     ],
   },
 
@@ -39,15 +46,15 @@ export const poster: PosterContent = {
       src: "assets/figures/numerical_snapshots.png",
       alt: "Numerical pinch-off sequences: bubble and drop, Newtonian and viscoelastic",
       caption:
-        "Direct numerical simulation (<b>Basilisk C</b>). Top — a <b>bubble</b> neck pinches off; Newtonian (left) and viscoelastic (right) both reach the singular point. Bottom — a <b>drop</b> neck; Newtonian (left) pinches, but the same polymer (right) draws it into a long, persistent thread.",
+        "Direct numerical simulation (<b>Basilisk C</b>, Oldroyd-B). Top — a <b>bubble</b> neck pinches off; Newtonian (left) and viscoelastic (right) look alike. Bottom — a <b>drop</b> neck; Newtonian (left) pinches, but the same polymer (right) draws out a long, persistent thread.",
     },
     lede:
-      "A <strong>singularity</strong> is where a smooth flow blows up — a finite quantity racing to infinity in a finite time. As a free surface pinches, the neck radius collapses to zero and the dynamics turn <em>universal and self-similar</em>: the flow forgets how it began. Add a pinch of polymer and the two textbook cases part ways.",
+      "A <strong>singularity</strong> is where a smooth flow blows up — a finite quantity racing to infinity in a finite time. As a free surface pinches, the neck radius $h$ collapses to zero and the dynamics turn self-similar, $h \\sim (t_0-t)^{\\alpha}$: the flow forgets how it began. A dilute polymer then changes the route to pinch-off — for a drop, but not for a bubble.",
     plots: {
       src: "assets/figures/hero_scaling.png",
-      alt: "Neck radius h(t) for a drop and a bubble, with log-log insets showing the 1/2 self-similar scaling",
+      alt: "Neck radius h(t) for a drop and a bubble, with log-log insets showing the self-similar scaling exponents",
       caption:
-        "Neck radius <code>h(t)</code> for each case; the log–log insets show the self-similar <code>1/2</code> scaling near pinch-off. <i>Axes shown — data to follow.</i>",
+        "Newtonian neck radius $h(t)$ — a drop thins as $(t_0-t)^{2/3}$, a bubble as $(t_0-t)^{1/2}$ (insets, log–log). <i>Axes shown — data to follow.</i>",
       blend: false,
     },
   },
@@ -65,17 +72,17 @@ export const poster: PosterContent = {
         { text: "DNS · Basilisk", tone: "teal" },
       ],
       body: [
-        "Pinch-off, coalescence, the snap of a sheet or jet — soft-matter flows routinely concentrate geometry, stress and time into a single point. There the neck radius, the curvature and the local strain rate diverge together, and the smooth continuum picture is pushed to its limit.",
-        "Close to that point the flow loses memory of how it began. Whatever the nozzle, the liquid or the forcing, the final approach collapses onto the <strong>same self-similar shape</strong>.",
+        "Pinch-off, coalescence, the snap of a sheet or jet — soft-matter flows routinely concentrate geometry, stress and time into a single point, where the neck radius, the curvature and the strain rate diverge together.",
+        "Near pinch-off the flow loses memory of how it began: the neck thins self-similarly, $h \\sim (t_0-t)^{\\alpha}$, with $\\alpha = 2/3$ for a Newtonian drop and $\\alpha \\simeq 1/2$ for a bubble.",
       ],
     },
     {
       kind: "section",
       column: "left",
-      heading: "Drops: elasticity changes the route",
+      heading: "Drops: a thread arrests pinch-off",
       body: [
-        "A Newtonian drop pinches in finite time: the neck thins to a point and the drop detaches — a clean finite-time singularity.",
-        "<em>Add polymers</em> and the route changes. As the neck thins, stretching chains build elastic stress along the thread and arrest the collapse. The neck survives as a slender filament that beads up into the classic <strong>beads-on-a-string</strong> — the singularity is postponed, then averted.",
+        "A Newtonian drop reaches a finite-time singularity. Add a dilute polymer and the chains stretch along the neck, building an elastic stress that diverges strongly, $\\sigma_{zz} \\sim G\\,(h_0/h)^{4}$, and halts the collapse.",
+        "The neck survives as a slender filament — the classic <strong>beads-on-a-string</strong>.",
       ],
       figure: {
         src: "assets/figures/drop_experiment_two_rows.png",
@@ -83,32 +90,33 @@ export const poster: PosterContent = {
         caption:
           "<b>Drop pinch-off.</b> Top: a Newtonian neck thins to a true finite-time singularity. Bottom: a dilute polymer turns the neck into a persistent beads-on-a-string filament.",
       },
-      outcome: { text: "Polymers kill the drop singularity", tone: "coral" },
+      outcome: { text: "Dilute polymer → a thread; pinch-off arrested", tone: "coral" },
     },
 
-    // ---------- RIGHT COLUMN: scaling → bubbles ----------
+    // ---------- RIGHT COLUMN: mechanism → bubbles ----------
     {
       kind: "scaling",
       column: "right",
-      heading: "The self-similar fingerprint",
-      formula: "h<sub>min</sub>(t) &nbsp;∼&nbsp; (t<sub>0</sub> − t)<sup>α</sup>",
-      note: "The minimum neck radius vanishes as a power law in the time-to-pinch <code>t<sub>0</sub> − t</code>. Rescale every interface by the local neck radius and the shapes collapse onto a single master curve.",
+      heading: "Why elasticity picks sides",
+      formula:
+        "\\underbrace{\\sigma_{zz}\\sim G\\!\\left(\\tfrac{h_0}{h}\\right)^{4}}_{\\text{drop}}\\ \\ \\gg\\ \\ \\underbrace{\\sigma_{rr}\\sim G\\!\\left(\\tfrac{h_0}{h}\\right)^{2}}_{\\text{bubble}}",
+      note: "Both stresses are singular at pinch-off, but the bubble's diverges far more weakly — a drop's balance is axial and capillary, a bubble's is radial and inertial. So a dilute polymer grows a thread on a drop, while a bubble pinches like a Newtonian fluid until the elastocapillary number $\\mathrm{Ec}=G h_0/\\gamma$ is pushed up by high concentration.",
     },
     {
       kind: "section",
       column: "right",
-      heading: "Bubbles: elasticity leaves the singularity intact",
+      heading: "Bubbles: the singularity survives",
       body: [
-        "A collapsing bubble neck pinches just as sharply, but the stretching now happens in the liquid <em>outside</em> the neck — where the polymer has little chance to organise against the flow.",
-        "Add the same polymers and the near-singular sequence looks almost unchanged: the bubble keeps its Newtonian-like approach to the <strong>singular point</strong>.",
+        "A bubble neck pinches just as sharply, $h \\sim (t_0-t)^{1/2}$, but the weak stress cannot organise a thread in a dilute solution — the pinch-off stays Newtonian-like.",
+        "A thread appears only at <strong>high polymer concentration</strong>, where it becomes sensitive to the size of the needle the bubble detaches from.",
       ],
       figure: {
         src: "assets/figures/bubble_experiment_two_rows.png",
         alt: "Experimental bubble pinch-off: Newtonian row and viscoelastic row",
         caption:
-          "<b>Bubble pinch-off.</b> Top: Newtonian. Bottom: viscoelastic. The two near-singular sequences are almost indistinguishable.",
+          "<b>Bubble pinch-off.</b> Top: Newtonian. Bottom: viscoelastic. In the dilute limit the two near-singular sequences are almost indistinguishable.",
       },
-      outcome: { text: "Polymers spare the bubble singularity", tone: "teal" },
+      outcome: { text: "Dilute polymer → no thread; pinch-off survives", tone: "teal" },
     },
 
     // ---------- FULL-WIDTH: synthesis ----------
@@ -117,29 +125,32 @@ export const poster: PosterContent = {
       column: "full",
       heading: "What it tells us",
       items: [
-        "Two free surfaces, one polymer additive, <strong>opposite outcomes</strong>: elasticity arrests the drop singularity but barely touches the bubble's.",
-        "The deciding factor is <em>where</em> the fluid is stretched — inside the thinning thread for a drop, outside the collapsing neck for a bubble.",
-        "Singularities are where flows turn <strong>universal</strong>. Knowing which ones elasticity can tame is knowing how to control breakup, sprays and the size of the drops that fly off.",
+        "One polymer additive, two free surfaces, <strong>opposite fates</strong>: a thread arrests the drop, while the dilute bubble pinches like a Newtonian fluid.",
+        "The split is set by how strongly the elastic stress diverges near the singularity — as $(h_0/h)^{4}$ for a drop versus $(h_0/h)^{2}$ for a bubble.",
+        "Captured by direct simulation and an Oldroyd-B model. Singularities are where flows turn universal; knowing which ones elasticity can tame guides how we control breakup, sprays and aerosols.",
       ],
     },
 
-    // ---------- FULL-WIDTH: endmatter (references | acknowledgements) ----------
+    // ---------- FULL-WIDTH: endmatter ----------
     {
       kind: "references",
       column: "full",
       heading: "References",
       items: [
+        "<b>Verschuur, C. I., Oratis, A. T., Sanjay, V. &amp; Snoeijer, J. H.</b> How elasticity affects bubble pinch-off. <i>arXiv</i>:2511.20075 (2026); submitted to <i>Phys. Rev. Fluids</i>.",
         "<b>Eggers, J.</b> Nonlinear dynamics and breakup of free-surface flows. <i>Rev. Mod. Phys.</i> <b>69</b>, 865 (1997).",
         "<b>Day, R. F., Hinch, E. J. &amp; Lister, J. R.</b> Self-similar capillary pinchoff of an inviscid fluid. <i>Phys. Rev. Lett.</i> <b>80</b>, 704 (1998).",
+        "<b>Burton, J. C., Waldrep, R. &amp; Taborek, P.</b> Scaling and instabilities in bubble pinch-off. <i>Phys. Rev. Lett.</i> <b>94</b>, 184502 (2005).",
         "<b>Clasen, C.</b> et al. The beads-on-string structure of viscoelastic threads. <i>J. Fluid Mech.</i> <b>556</b>, 283 (2006).",
-        "<b>Popinet, S.</b> Basilisk: adaptive solvers for multiphase flow. <code>basilisk.fr</code> (2013–).",
+        "<b>Eggers, J., Herrada, M. A. &amp; Snoeijer, J. H.</b> Self-similar breakup of polymeric threads as described by the Oldroyd-B model. <i>J. Fluid Mech.</i> <b>887</b>, A19 (2020).",
+        "<b>Popinet, S.</b> An accurate adaptive solver for surface-tension-driven interfacial flows. <i>J. Comput. Phys.</i> <b>228</b>, 5838 (2009). <code>basilisk.fr</code>.",
       ],
     },
     {
       kind: "acknowledgements",
       column: "full",
       heading: "Acknowledgements",
-      body: "Computations with <b>Basilisk C</b> on Durham's <b>Hamilton</b> HPC. Part of the CoMPhy Lab programme on soft-matter singularities.",
+      body: "Computations with <b>Basilisk C</b> on Durham's <b>Hamilton</b> HPC. A CoMPhy Lab × Physics of Fluids (Twente) collaboration.",
     },
   ],
 

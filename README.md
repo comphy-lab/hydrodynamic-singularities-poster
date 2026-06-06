@@ -6,9 +6,14 @@ Poster Event, 12 June 2026.
 
 The story: a singularity is where a smooth free-surface flow blows up and
 forgets its past — and near it the dynamics turn universal and self-similar. The
-poster contrasts the two textbook cases — **drop** pinch-off, where a little
-polymer kills the singularity (beads-on-a-string), and **bubble** pinch-off,
-where the same polymer leaves it intact.
+poster contrasts **drop** pinch-off, where a dilute polymer grows a thread
+(strong stress, `σ_zz ~ G(h₀/h)⁴`), with **bubble** pinch-off, where the same
+polymer does nothing in the dilute limit (weak stress, `σ_rr ~ G(h₀/h)²`).
+
+It is built around Verschuur, Oratis, Sanjay & Snoeijer, *How elasticity affects
+bubble pinch-off* (arXiv:2511.20075, submitted to *Phys. Rev. Fluids*). Equations
+are real LaTeX, rendered with **KaTeX** at build time (no client JS), with the
+KaTeX CSS + fonts inlined so the poster stays self-contained.
 
 ![Poster preview](outputs/hydrodynamic_singularities_poster.png)
 

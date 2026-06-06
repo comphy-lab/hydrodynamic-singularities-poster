@@ -48,8 +48,8 @@ rcParams.update({
 })
 
 PANELS = [
-    {"name": "Drop", "accent": CORAL},
-    {"name": "Bubble", "accent": TEAL},
+    {"name": "Drop", "accent": CORAL, "exp": 2.0 / 3.0, "label": r"$\sim (t_0-t)^{2/3}$"},
+    {"name": "Bubble", "accent": TEAL, "exp": 1.0 / 2.0, "label": r"$\sim (t_0-t)^{1/2}$"},
 ]
 
 
@@ -68,11 +68,11 @@ def style_main(ax) -> None:
     ax.set_ylabel(r"$h(t)$", fontsize=20, rotation=0, ha="right", va="center", labelpad=14)
 
 
-def add_inset(ax, accent: str) -> None:
-    """Log-log inset of h vs (t0 - t) with the slope-1/2 self-similar guide."""
+def add_inset(ax, accent: str, exp: float, label: str) -> None:
+    """Log-log inset of h vs (t0 - t) with the self-similar power-law guide."""
     ins = ax.inset_axes([0.46, 0.50, 0.50, 0.46])
     x = np.logspace(-3.0, 0.0, 60)
-    ins.plot(x, x ** 0.5, ls="--", lw=2.4, color=accent)
+    ins.plot(x, x ** exp, ls="--", lw=2.4, color=accent)
     ins.set_xscale("log")
     ins.set_yscale("log")
     ins.set_xticklabels([])
@@ -83,10 +83,10 @@ def add_inset(ax, accent: str) -> None:
     ins.set_xlabel(r"$t_0 - t$", fontsize=12, labelpad=2)
     ins.set_ylabel(r"$h$", fontsize=12, rotation=0, labelpad=6, va="center")
     ins.annotate(
-        r"slope $\,1/2$",
-        xy=(10 ** -1.4, (10 ** -1.4) ** 0.5),
-        xytext=(10 ** -2.7, 10 ** -0.55),
-        fontsize=11, color=accent,
+        label,
+        xy=(10 ** -1.4, (10 ** -1.4) ** exp),
+        xytext=(10 ** -2.95, 10 ** -0.42),
+        ha="left", fontsize=10.5, color=accent,
     )
 
 
@@ -96,7 +96,7 @@ def main() -> None:
         style_main(ax)
         ax.set_title(panel["name"], loc="left", fontsize=18, fontweight="bold",
                      color=panel["accent"], pad=12)
-        add_inset(ax, panel["accent"])
+        add_inset(ax, panel["accent"], panel["exp"], panel["label"])
 
         # --- DROP YOUR DATA HERE -------------------------------------------
         # t, h = load_neck_radius(panel["name"])

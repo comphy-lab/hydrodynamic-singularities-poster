@@ -10,7 +10,9 @@
     "poster": "python3 scripts/make_poster.py"
   },
   "devDependencies": {
+    "@types/katex": "^0.16.8",
     "@types/node": "^22.10.2",
+    "katex": "^0.17.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
