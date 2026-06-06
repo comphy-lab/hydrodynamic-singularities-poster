@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+.env.local
+
+# Tooling/cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local scratch exports
+outputs/*-draft.*
+outputs/*-scratch.*

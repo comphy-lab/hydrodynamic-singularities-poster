@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="841mm" height="1189mm" viewBox="0 0 841 1189" version="1.1">
+<defs>
+    <style>
+      text { dominant-baseline: alphabetic; }
+      .smallcaps { letter-spacing: 0.08em; }
+    </style>
+    </defs>
+<rect x="0" y="0" width="841" height="1189" fill="#F8FAFC"/>
+<rect x="0" y="0" width="841" height="178" fill="#FFFFFF"/>
+<rect x="0" y="171" width="841" height="7" fill="#0B6E8E"/>
+<text x="58" y="74" fill="#17202A" font-size="35" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="900" text-anchor="start"><tspan x="58" dy="0.00">Hydrodynamic Singularities</tspan></text>
+<text x="60" y="119" fill="#4B5563" font-size="14" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="500" text-anchor="start"><tspan x="60" dy="0.00">When smooth flows focus geometry, stress, and time into a tiny region</tspan></text>
+<text x="60" y="150" fill="#4B5563" font-size="8.8" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" text-anchor="start"><tspan x="60" dy="0.00">CoMPhy Lab | Department of Physics | Durham University</tspan></text>
+<text x="780" y="150" fill="#4B5563" font-size="7" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="end"><tspan x="780" dy="0.00">A0 scaffold | replace placeholders</tspan><tspan x="780" dy="8.54">with final figures and narrative</tspan></text>
+<g><circle cx="420.5" cy="272" r="146" fill="#E0F2FE" opacity="0.65"/>
+<circle cx="420.5" cy="272" r="112" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2"/>
+<g><path d="M 317.60 169.10 C 388.65 198.50, 396.00 254.85, 420.50 272.00 C 445.00 289.15, 452.35 345.50, 523.40 374.90" fill="none" stroke="#0B6E8E" stroke-width="12.25" stroke-linecap="round"/>
+<path d="M 317.60 374.90 C 388.65 345.50, 396.00 289.15, 420.50 272.00 C 445.00 254.85, 452.35 198.50, 523.40 169.10" fill="none" stroke="#0B6E8E" stroke-width="12.25" stroke-linecap="round"/>
+<circle cx="420.5" cy="272" r="10.290000000000001" fill="#FFFFFF" stroke="#C2410C" stroke-width="3.6750000000000003"/></g>
+<circle cx="420.5" cy="272" r="8" fill="#C2410C"/>
+<text x="502.5" y="193" fill="#C2410C" font-size="9.5" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="502.5" dy="0.00">near-singular neck</tspan></text>
+<line x1="478.5" y1="234" x2="431.5" y2="268" stroke="#C2410C" stroke-width="1.3"/>
+<text x="224.5" y="384" fill="#4B5563" font-size="9.5" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="700" text-anchor="start"><tspan x="224.5" dy="0.00">local length scale collapses</tspan></text>
+<line x1="370.5" y1="349" x2="410.5" y2="284" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="4 4"/></g>
+<g><rect x="42" y="450" width="142" height="137" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.9"/>
+<rect x="42" y="450" width="5" height="137" rx="5" fill="#0B6E8E"/>
+<g><path d="M 78.56 467.56 C 102.34 477.40, 104.80 496.26, 113.00 502.00 C 121.20 507.74, 123.66 526.60, 147.44 536.44" fill="none" stroke="#0B6E8E" stroke-width="4.1" stroke-linecap="round"/>
+<path d="M 78.56 536.44 C 102.34 526.60, 104.80 507.74, 113.00 502.00 C 121.20 496.26, 123.66 477.40, 147.44 467.56" fill="none" stroke="#0B6E8E" stroke-width="4.1" stroke-linecap="round"/>
+<circle cx="113" cy="502" r="3.444" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.23"/></g>
+<text x="55" y="556" fill="#17202A" font-size="10.8" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="55" dy="0.00">Pinch-off</tspan></text>
+<text x="55" y="572" fill="#4B5563" font-size="5.7" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="55" dy="0.00">minimum radius selects the</tspan><tspan x="55" dy="6.95">clock</tspan></text></g>
+<g><rect x="197" y="450" width="142" height="137" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.9"/>
+<rect x="197" y="450" width="5" height="137" rx="5" fill="#0F8B8D"/>
+<g><circle cx="246.5" cy="502" r="24.08" fill="none" stroke="#0F8B8D" stroke-width="3.44"/>
+<circle cx="289.5" cy="502" r="24.08" fill="none" stroke="#0F8B8D" stroke-width="3.44"/>
+<rect x="254.24" y="495.98" width="27.52" height="12.04" rx="6.02" fill="#C2410C" opacity="0.9"/>
+<line x1="268" y1="473.62" x2="268" y2="530.38" stroke="#CBD5E1" stroke-width="0.9460000000000001" stroke-dasharray="2.58 2.58"/></g>
+<text x="210" y="556" fill="#17202A" font-size="10.8" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="210" dy="0.00">Coalescence</tspan></text>
+<text x="210" y="572" fill="#4B5563" font-size="5.7" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="210" dy="0.00">a microscopic bridge reshapes</tspan><tspan x="210" dy="6.95">both drops</tspan></text></g>
+<g><rect x="352" y="450" width="142" height="137" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.9"/>
+<rect x="352" y="450" width="5" height="137" rx="5" fill="#2F855A"/>
+<g><path d="M 397.16 539.80 C 415.40 524.60, 419.20 510.92, 423.00 480.52 C 426.80 510.92, 430.60 524.60, 448.84 539.80" fill="#E0F2FE" stroke="#2F855A" stroke-width="2.2800000000000002"/>
+<circle cx="423" cy="472.92" r="4.94" fill="#C2410C"/>
+<circle cx="423" cy="459.24" r="2.888" fill="#B7791F"/></g>
+<text x="365" y="556" fill="#17202A" font-size="10.8" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="365" dy="0.00">Jets</tspan></text>
+<text x="365" y="572" fill="#4B5563" font-size="5.7" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="365" dy="0.00">focusing launches fast tips and</tspan><tspan x="365" dy="6.95">droplets</tspan></text></g>
+<g><rect x="507" y="450" width="142" height="137" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.9"/>
+<rect x="507" y="450" width="5" height="137" rx="5" fill="#B7791F"/>
+<g><path d="M 537.00 505.28 C 556.68 480.68, 599.32 480.68, 619.00 505.28" fill="none" stroke="#B7791F" stroke-width="4.1" stroke-linecap="round"/>
+<circle cx="543.56" cy="510.2" r="2.05" fill="#C2410C" opacity="0.85"/>
+<circle cx="555.04" cy="514.3" r="2.3779999999999997" fill="#C2410C" opacity="0.85"/>
+<circle cx="566.52" cy="510.2" r="2.7059999999999995" fill="#C2410C" opacity="0.85"/>
+<circle cx="578.0" cy="514.3" r="2.05" fill="#C2410C" opacity="0.85"/>
+<circle cx="589.4799999999999" cy="510.2" r="2.3779999999999997" fill="#C2410C" opacity="0.85"/>
+<circle cx="600.9599999999999" cy="514.3" r="2.7059999999999995" fill="#C2410C" opacity="0.85"/>
+<circle cx="612.4399999999999" cy="510.2" r="2.05" fill="#C2410C" opacity="0.85"/></g>
+<text x="520" y="556" fill="#17202A" font-size="10.8" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="520" dy="0.00">Sheets</tspan></text>
+<text x="520" y="572" fill="#4B5563" font-size="5.7" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="520" dy="0.00">rims, holes, and ligaments</tspan><tspan x="520" dy="6.95">compete</tspan></text></g>
+<g><rect x="662" y="450" width="142" height="137" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.9"/>
+<rect x="662" y="450" width="5" height="137" rx="5" fill="#6B46C1"/>
+<g><line x1="692.68" y1="502" x2="773.32" y2="502" stroke="#6B46C1" stroke-width="2.184" stroke-linecap="round"/>
+<circle cx="701.08" cy="502" r="10.08" fill="#F5E8FF" stroke="#6B46C1" stroke-width="1.68"/>
+<circle cx="719.56" cy="502" r="4.2" fill="#F5E8FF" stroke="#6B46C1" stroke-width="1.68"/>
+<circle cx="736.36" cy="502" r="6.72" fill="#F5E8FF" stroke="#6B46C1" stroke-width="1.68"/>
+<circle cx="752.32" cy="502" r="3.36" fill="#F5E8FF" stroke="#6B46C1" stroke-width="1.68"/>
+<circle cx="768.28" cy="502" r="8.4" fill="#F5E8FF" stroke="#6B46C1" stroke-width="1.68"/></g>
+<text x="675" y="556" fill="#17202A" font-size="10.8" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="675" dy="0.00">Elastic threads</tspan></text>
+<text x="675" y="572" fill="#4B5563" font-size="5.7" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="675" dy="0.00">rheology changes the route to</tspan><tspan x="675" dy="6.95">breakup</tspan></text></g>
+<g><rect x="50" y="642" width="236" height="248" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="50" y="642" width="236" height="20" rx="6" fill="#EFF6FF"/>
+<text x="63" y="686" fill="#17202A" font-size="12.6" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="850" text-anchor="start"><tspan x="63" dy="0.00">1. What becomes</tspan><tspan x="63" dy="15.37">singular?</tspan></text>
+<text x="63" y="733" fill="#4B5563" font-size="8.0" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="63" dy="0.00">A smooth interface develops a neck,</tspan><tspan x="63" dy="9.76">bridge, rim, or tip whose local</tspan><tspan x="63" dy="9.76">length scale becomes much smaller</tspan><tspan x="63" dy="9.76">than the surrounding flow. The global</tspan><tspan x="63" dy="9.76">object looks simple; the decisive</tspan><tspan x="63" dy="9.76">physics lives in a small inner</tspan><tspan x="63" dy="9.76">region.</tspan></text></g>
+<g><rect x="310" y="642" width="236" height="248" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="310" y="642" width="236" height="20" rx="6" fill="#EFF6FF"/>
+<text x="323" y="686" fill="#17202A" font-size="12.6" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="850" text-anchor="start"><tspan x="323" dy="0.00">2. What resolves it?</tspan></text>
+<text x="323" y="733" fill="#4B5563" font-size="8.0" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="323" dy="0.00">Inertia, viscosity, surface tension,</tspan><tspan x="323" dy="9.76">gas flow, contact-line physics,</tspan><tspan x="323" dy="9.76">elasticity, and molecular cutoffs can</tspan><tspan x="323" dy="9.76">each set the final balance. The</tspan><tspan x="323" dy="9.76">useful question is not just whether</tspan><tspan x="323" dy="9.76">breakup happens, but which balance</tspan><tspan x="323" dy="9.76">controls the path.</tspan></text></g>
+<g><rect x="570" y="642" width="236" height="248" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="570" y="642" width="236" height="20" rx="6" fill="#EFF6FF"/>
+<text x="583" y="686" fill="#17202A" font-size="12.6" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="850" text-anchor="start"><tspan x="583" dy="0.00">3. Why should students</tspan><tspan x="583" dy="15.37">care?</tspan></text>
+<text x="583" y="733" fill="#4B5563" font-size="8.0" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="583" dy="0.00">A tiny region controls printing,</tspan><tspan x="583" dy="9.76">spraying, foams, emulsions, bubbles,</tspan><tspan x="583" dy="9.76">jets, and soft biological flows.</tspan><tspan x="583" dy="9.76">Singularities are where continuum</tspan><tspan x="583" dy="9.76">mechanics shows both its power and</tspan><tspan x="583" dy="9.76">its limits.</tspan></text></g>
+<rect x="50" y="930" width="741" height="142" rx="6" fill="#17202A"/>
+<text x="72" y="964" fill="#FFFFFF" font-size="17" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="850" text-anchor="start"><tspan x="72" dy="0.00">Scaling breadcrumbs for later content</tspan></text>
+<rect x="74" y="988" width="158" height="54" rx="5" fill="#FFFFFF" opacity="0.1"/>
+<text x="84" y="1008" fill="#BAE6FD" font-size="7.2" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="84" dy="0.00">Capillary time</tspan></text>
+<text x="84" y="1028" fill="#FFFFFF" font-size="7.4" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="650" text-anchor="start"><tspan x="84" dy="0.00">t_c ~ sqrt(rho R^3 /</tspan><tspan x="84" dy="9.03">sigma)</tspan></text>
+<rect x="252" y="988" width="158" height="54" rx="5" fill="#FFFFFF" opacity="0.1"/>
+<text x="262" y="1008" fill="#BAE6FD" font-size="7.2" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="262" dy="0.00">Pinch-off</tspan></text>
+<text x="262" y="1028" fill="#FFFFFF" font-size="7.4" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="650" text-anchor="start"><tspan x="262" dy="0.00">r_min -&gt; 0 in a self-</tspan><tspan x="262" dy="9.03">similar inner flow</tspan></text>
+<rect x="430" y="988" width="158" height="54" rx="5" fill="#FFFFFF" opacity="0.1"/>
+<text x="440" y="1008" fill="#BAE6FD" font-size="7.2" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="440" dy="0.00">Coalescence</tspan></text>
+<text x="440" y="1028" fill="#FFFFFF" font-size="7.4" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="650" text-anchor="start"><tspan x="440" dy="0.00">bridge radius couples</tspan><tspan x="440" dy="9.03">local curvature to</tspan><tspan x="440" dy="9.03">global motion</tspan></text>
+<rect x="608" y="988" width="158" height="54" rx="5" fill="#FFFFFF" opacity="0.1"/>
+<text x="618" y="1008" fill="#BAE6FD" font-size="7.2" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" text-anchor="start"><tspan x="618" dy="0.00">Soft matter</tspan></text>
+<text x="618" y="1028" fill="#FFFFFF" font-size="7.4" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="650" text-anchor="start"><tspan x="618" dy="0.00">Oh, We, Ca, De, Wi</tspan><tspan x="618" dy="9.03">decide the dominant</tspan><tspan x="618" dy="9.03">balance</tspan></text>
+<line x1="50" y1="1110" x2="791" y2="1110" stroke="#CBD5E1" stroke-width="1.0"/>
+<text x="60" y="1140" fill="#4B5563" font-size="8.3" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" text-anchor="start"><tspan x="60" dy="0.00">Placeholder footer: add QR code, contact, key references, and final figure credits here.</tspan></text>
+</svg>
