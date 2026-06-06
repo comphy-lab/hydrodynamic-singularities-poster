@@ -14,3 +14,12 @@ Likely final panel structure:
 1. What becomes singular?
 2. How do theory and simulations resolve the near-singular region?
 3. Why does a tiny neck, bridge, rim, or filament control the whole flow?
+
+## Visual Direction
+
+- Follow the older Vatsal poster style: large centred title, abstract/highlights
+  near the top, one large middle figure strip, concise lower panels, and a clean
+  institutional footer.
+- Follow the Solidifying Jets poster style for the rounded blue section frames.
+- Footer affiliation order: Physics of Fluids left, CoMPhy Lab centred, Durham
+  University right.

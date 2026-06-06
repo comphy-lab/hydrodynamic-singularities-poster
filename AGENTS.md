@@ -27,7 +27,10 @@ The script writes `outputs/hydrodynamic_singularities_poster.svg` and uses
 ## Guidelines
 
 - Keep the poster A0-sized unless Vatsal asks for another print format.
+- Keep the CoMPhy Lab logo centred in the footer; Physics of Fluids sits left,
+  Durham University sits right.
 - Keep content student-facing: mechanism, visual example, one scaling breadcrumb.
 - Prefer vector geometry and editable text over flattened raster art.
 - Generated final assets in `outputs/` are allowed in version control.
+- Copied logo assets in `assets/logos/` are intentionally committed.
 - Do not commit private correspondence, event emails, or screenshots.

@@ -26,6 +26,9 @@ Generated assets:
 - `outputs/hydrodynamic_singularities_poster.svg`
 - `outputs/hydrodynamic_singularities_poster.pdf`
 - `outputs/hydrodynamic_singularities_poster.png`
+- `assets/logos/physics-of-fluids.png`
+- `assets/logos/comphy-lab.png`
+- `assets/logos/durham-university.png`
 
 The SVG is the editable source. The PDF is the print-facing export. The PNG is
 a quick visual preview.
@@ -46,3 +49,7 @@ brew install librsvg
 This is deliberately a skeleton. The content pass should replace the placeholder
 panel text with the final undergraduate-facing narrative and real simulation or
 figure assets where useful.
+
+The current layout is informed by Vatsal's earlier LMC/JMBC posters and the
+Solidifying Jets student poster: centred title, blue framed sections, a dominant
+middle visual sequence, and a footer logo strip with the CoMPhy Lab logo centred.
