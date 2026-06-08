@@ -10,7 +10,7 @@
  *     columns (a synthesis band, then a references|acknowledgements endmatter).
  */
 
-import type { Block, Chip, Figure, Logo, PosterContent } from "./types.js";
+import type { Block, Chip, Figure, Logo, PosterContent, QR } from "./types.js";
 
 export interface RenderOptions {
   /** Map a repo-relative asset path to its final src (typically a data URI). */
@@ -86,7 +86,8 @@ const POSTER_EXTRAS = `
    figure / caption / verdict can never be clipped behind the bands below it.
    The poster then fills via its bands + a small uniform bottom margin. */
 .p-body { flex: 0 0 auto; }
-.p-footer { margin-top: auto; }
+/* Footer now carries just contact + partner marks (QR moved to the masthead) */
+.p-footer { margin-top: auto; grid-template-columns: 1fr auto; }
 
 /* Partner-mark treatments so each sits cleanly on warm paper */
 .p-partner--multiply { mix-blend-mode: multiply; }
@@ -94,9 +95,13 @@ const POSTER_EXTRAS = `
 :root[data-theme="dark"]  .p-partner--multiply { mix-blend-mode: screen; }
 
 /* Header lab mark — the drop-splash anchors the right of the masthead and
-   balances the dense title block (it's on-theme: a splashing drop). */
+   balances the dense title block (it's on-theme: a splashing drop). The QR
+   block sits to its left, filling what used to be masthead whitespace. */
 .p-header { align-items: center; }
+.p-logos { flex-direction: row; align-items: center; gap: var(--p-gutter); }
 .p-logos__lab img { height: 104mm; }
+.p-header .qr { gap: 14pt; }
+.p-header .qr__code { width: 46mm; height: 46mm; }
 
 /* Hero: the phenomenon first — two stacked pinch-off filmstrips (drop, then
    bubble), each with a left rail (what it is + its self-similar scaling). */
@@ -127,7 +132,7 @@ const POSTER_EXTRAS = `
 .p-strip__law .katex { color: var(--c-accent-teal); }
 .p-strip__note { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); margin: 9pt 0 0; line-height: 1.3; }
 .p-strip__bed { display: grid; place-items: center; min-width: 0; }
-.p-strip__bed img { height: 72mm; width: auto; max-width: 100%; display: block; mix-blend-mode: multiply; }
+.p-strip__bed img { height: 78mm; width: auto; max-width: 100%; display: block; mix-blend-mode: multiply; }
 .p-hero__cap {
   font-family: var(--t-sans); font-size: var(--pt-caption); color: var(--fg-2);
   line-height: 1.38; margin: 10mm 0 0; padding-top: 11pt;
@@ -336,6 +341,18 @@ ${rows}
   }
 }
 
+function qrBlock(qr: QR, opts: RenderOptions): string {
+  const hasImg = !!qr.img && opts.hasAsset(qr.img);
+  const code = hasImg ? img(qr.img!, `QR code linking to ${qr.url}`, opts) : "<i></i>";
+  const lines = qr.lines
+    .map((l, i) => (i === qr.lines.length - 1 ? `<span class="mono">${l}</span>` : l))
+    .join("<br />");
+  return `<div class="qr${hasImg ? " has-img" : ""}">
+    <div class="qr__code">${code}</div>
+    <div class="qr__label"><b>${qr.title}</b>${lines}</div>
+  </div>`;
+}
+
 function renderHeader(content: PosterContent, opts: RenderOptions): string {
   const { meta, labMark } = content;
   const authors = meta.authors
@@ -356,6 +373,7 @@ function renderHeader(content: PosterContent, opts: RenderOptions): string {
     ${collab}
   </div>
   <div class="p-logos">
+    ${qrBlock(content.footer.qr, opts)}
     <div class="p-logos__lab">${logoImg(labMark, opts)}</div>
   </div>
 </header>`;
@@ -400,21 +418,8 @@ ${strips}
 
 function renderFooter(content: PosterContent, opts: RenderOptions): string {
   const { footer } = content;
-  const hasImg = !!footer.qr.img && opts.hasAsset(footer.qr.img);
-  const code = hasImg
-    ? img(footer.qr.img!, `QR code linking to ${footer.qr.url}`, opts)
-    : "<i></i>";
-  const lines = footer.qr.lines
-    .map((l, i) =>
-      i === footer.qr.lines.length - 1 ? `<span class="mono">${l}</span>` : l,
-    )
-    .join("<br />");
   const partners = footer.partners.map((p) => logoImg(p, opts)).join("\n      ");
   return `<footer class="p-footer">
-  <div class="qr${hasImg ? " has-img" : ""}">
-    <div class="qr__code">${code}</div>
-    <div class="qr__label"><b>${footer.qr.title}</b>${lines}</div>
-  </div>
   <div class="p-contact">${footer.contact.join("<br />")}</div>
   <div class="p-funding">
       ${partners}
