@@ -1,7 +1,7 @@
 # Hydrodynamic Singularities — A0 poster on the CoMPhy Lab design system.
 # The poster is HTML/CSS (src/ + design-system/); these targets drive the render.
 
-.PHONY: all poster html pdf png landscape logos setup typecheck clean
+.PHONY: all poster html pdf png landscape logos figures setup typecheck clean
 
 # Full pipeline: QR -> standalone HTML -> true-A0 PDF + PNG preview.
 all poster:
@@ -37,6 +37,22 @@ logos:
 		echo "logos: $$pdf -> $$svg"; \
 	done; \
 	[ -n "$$svgo" ] || echo "logos: svgo not found (run 'make setup'); SVGs left unoptimised (larger files)."
+
+# Regenerate the experiment figures from their PDF masters. Unlike the logos,
+# these PDFs are raster composites (microscopy filmstrips), so the build uses
+# high-DPI *transparent* PNGs, not SVG — SVG would only re-wrap the same pixels.
+# 220 dpi ≈ 275 effective DPI at the ~80 mm A0 display size; -transp keeps the
+# canvas/label transparency so the warm paper shows through. Requires pdftocairo
+# (poppler). The PDF masters are large (~54 MB); if they're not in the working
+# tree this target skips gracefully and the committed PNGs are used as-is.
+figures:
+	@command -v pdftocairo >/dev/null 2>&1 || { echo "pdftocairo (poppler) not found; install it to regenerate figure PNGs."; exit 1; }
+	@for pdf in assets/figures/*_experiment_two_rows.pdf; do \
+		[ -e "$$pdf" ] || { echo "figures: no PDF masters in the tree; using committed PNGs."; break; }; \
+		stem=$${pdf%.pdf}; \
+		pdftocairo -png -transp -r 220 -singlefile "$$pdf" "$$stem"; \
+		echo "figures: $$pdf -> $$stem.png"; \
+	done
 
 # One-off: install the TypeScript toolchain (tsx + typescript).
 setup:
