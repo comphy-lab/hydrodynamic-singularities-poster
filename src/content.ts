@@ -40,7 +40,7 @@ export const poster: PosterContent = {
       "With <b>Coen I. Verschuur</b>, <b>Alexandros T. Oratis</b> &amp; <b>Jacco H. Snoeijer</b> — Physics of Fluids, University of Twente",
   },
 
-  labMark: { src: "assets/logos/comphy-mark.png", alt: "CoMPhy Lab" },
+  labMark: { src: "assets/logos/comphy-mark.svg", alt: "CoMPhy Lab" },
 
   hero: {
     lede:
@@ -188,9 +188,9 @@ export const poster: PosterContent = {
       "<span class=\"mono\">vatsal.sanjay@comphy-lab.org</span>",
     ],
     partners: [
-      { src: "assets/logos/durham-university.png", alt: "Durham University", treatment: "multiply" },
-      { src: "assets/logos/physics-of-fluids.png", alt: "Physics of Fluids", treatment: "invert" },
-      { src: "assets/logos/basilisk.png", alt: "Basilisk", treatment: "normal" },
+      { src: "assets/logos/durham-university.svg", alt: "Durham University", treatment: "multiply" },
+      { src: "assets/logos/physics-of-fluids.svg", alt: "Physics of Fluids", treatment: "normal" },
+      { src: "assets/logos/basilisk.svg", alt: "Basilisk", treatment: "normal" },
     ],
   },
 };

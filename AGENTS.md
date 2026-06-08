@@ -55,8 +55,11 @@ no QR tooling → the design system's placeholder.
 - **Keep content student-facing**: mechanism, a visual example, one scaling
   breadcrumb. The science is the drop-vs-bubble singularity contrast — don't
   drop it in a redesign.
-- **Partner marks** (Durham, Physics of Fluids) render monochrome via blend/
-  invert; the CoMPhy mark and Basilisk stay in colour.
+- **Logos are vector SVGs** generated from the PDF masters in `assets/logos/`
+  (`make logos`, via `pdftocairo`); the build inlines the SVG so each mark stays
+  a true vector with transparency — crisp at any zoom, no white box on paper.
+  Durham blends to paper via `mix-blend-mode: multiply`; the CoMPhy mark,
+  Physics of Fluids and Basilisk render in full colour (`treatment: "normal"`).
 - Committed `outputs/` artifacts and `assets/` (logos, figures, QR) are
   intentionally tracked. `node_modules/` is not.
 - Do not commit private correspondence, event emails, or screenshots.
