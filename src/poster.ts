@@ -77,6 +77,11 @@ const POSTER_EXTRAS = `
 .p-formula .katex { color: var(--c-accent-teal); }
 
 .fig__bed { background: var(--c-paper); display: grid; place-items: center; padding: 8mm; }
+/* Fill figures (the wide experiment filmstrips): the image spans the card
+   width, with a slim bed so it reads edge-to-edge. Both fill cards share one
+   image height via --fig-fill-h so the drop and bubble cards match exactly. */
+.fig--fill .fig__bed { padding: 0 4mm; height: var(--fig-fill-h, 140mm); }
+.fig--fill .fig__bed img { width: 100%; height: 100%; object-fit: contain; }
 
 /* Columns: top-pack with a uniform gap (the .p-col gap drives spacing) */
 .p-cols .p-col { justify-content: flex-start; }
@@ -227,11 +232,15 @@ function img(src: string, alt: string, opts: RenderOptions, style = ""): string 
 
 function figure(fig: Figure, opts: RenderOptions): string {
   const blend = fig.blend === false ? "" : "mix-blend-mode:multiply;";
+  const cls = fig.fill ? "fig fig--fill" : "fig";
+  const style = fig.fill
+    ? `display:block;${blend}`
+    : `width:auto;max-width:100%;max-height:80mm;${blend}`;
   const cap = fig.caption
     ? `<figcaption class="fig__cap">${mathify(fig.caption, opts)}</figcaption>`
     : "";
-  return `<figure class="fig">
-  <div class="fig__bed">${img(fig.src, fig.alt, opts, `width:auto;max-width:100%;max-height:80mm;${blend}`)}</div>
+  return `<figure class="${cls}">
+  <div class="fig__bed">${img(fig.src, fig.alt, opts, style)}</div>
   ${cap}
 </figure>`;
 }

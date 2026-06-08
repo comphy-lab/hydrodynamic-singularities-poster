@@ -31,6 +31,9 @@ export interface Figure {
   caption?: string;
   /** Multiply the figure onto paper so its white background drops out. Default true. */
   blend?: boolean;
+  /** Let the image span the full card width (instead of the 80mm-tall default).
+   *  Used for the wide experiment filmstrips so they fill their card. */
+  fill?: boolean;
 }
 
 export interface Chip {

@@ -93,6 +93,7 @@ export const poster: PosterContent = {
       figure: {
         src: "assets/figures/drop_experiment_two_rows.png",
         alt: "Experimental drop pinch-off: a Newtonian water row and a dilute-polymer row",
+        fill: true,
         caption:
           "<b>Drop pinch-off.</b> Top: plain water reaches the singularity and snaps into satellites. Bottom: the same dilute polymer draws the neck into a persistent beads-on-a-string thread.",
       },
@@ -111,6 +112,7 @@ export const poster: PosterContent = {
       figure: {
         src: "assets/figures/bubble_experiment_two_rows.png",
         alt: "Experimental bubble pinch-off: a Newtonian water row and a dilute-polymer row",
+        fill: true,
         caption:
           "<b>Bubble pinch-off.</b> Top: water. Bottom: the same dilute polymer. In the dilute limit the two near-singular sequences are almost indistinguishable.",
       },
