@@ -152,38 +152,41 @@ const POSTER_EXTRAS = `
 }
 .p-hero__cap b { color: var(--c-accent-teal); font-weight: var(--t-weight-semi); }
 
-/* Drop-vs-bubble comparison grid (the "why the split" payoff) */
-.p-compare { display: grid; gap: 0; }
-.p-compare__row {
-  display: grid; grid-template-columns: 0.78fr 1.18fr 1.18fr; gap: var(--p-gutter);
-  padding: 8pt 0; border-top: 1px solid var(--c-border); align-items: baseline;
+/* Drop-vs-bubble comparison — a 3-column grid. Col 1: polymer schematic, then
+   the question labels. Cols 2 & 3: column head (Drop / Bubble) over a full-width
+   evidence figure, then the answers. The grid auto-flows three cells per row, so
+   every question lines up with its drop and bubble answers. */
+.p-compare3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  column-gap: var(--p-gutter); align-items: start;
 }
-.p-compare__row:first-child { border-top: 0; }
-.p-compare__row--head { border-bottom: 2.5px solid var(--c-border-strong); padding-bottom: 7pt; }
-.p-compare__rl {
+/* Top visual row: bottom-aligned so the question/answer table below starts level. */
+.p-compare3 > .p-c3__vis { align-self: end; }
+.p-c3__vis { min-width: 0; margin: 0; }
+.p-c3__schfig { display: block; }
+.p-c3__schfig img { width: auto; max-width: 100%; max-height: var(--c3-sch-h, 118mm); display: block; }
+.p-c3__schfig .fig__cap {
+  font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2);
+  line-height: 1.32; padding: 8pt 0 0; border: 0;
+}
+.p-c3__schfig .fig__cap b { color: var(--c-accent-teal); font-weight: var(--t-weight-semi); }
+.p-c3__head {
+  font-family: var(--t-serif); font-weight: var(--t-weight-bold);
+  font-size: 30pt; line-height: 1; margin: 0 0 8pt;
+}
+.p-c3__head--a { color: var(--c-accent-coral); }
+.p-c3__head--b { color: var(--c-accent-teal); }
+.p-c3__colfig { margin: 0; display: block; }
+.p-c3__colfig img { width: 100%; height: auto; display: block; mix-blend-mode: multiply; }
+.p-c3__q, .p-c3__a { border-top: 1px solid var(--c-border); padding: 9pt 0; }
+.p-c3__q {
   font-family: var(--t-sans); font-weight: var(--t-weight-bold);
   font-size: var(--pt-small); color: var(--fg-2);
   text-transform: uppercase; letter-spacing: 0.06em;
 }
-.p-compare__c { font-family: var(--t-sans); font-size: 23pt; color: var(--fg-1); line-height: 1.28; }
-.p-compare__c strong { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
-.p-compare__row--head .p-compare__c {
-  font-family: var(--t-serif); font-size: 27pt; font-weight: var(--t-weight-bold); line-height: 1;
-}
-.p-compare__c--a { color: var(--c-accent-coral); }
-.p-compare__c--b { color: var(--c-accent-teal); }
-.p-compare__note { margin: 11pt 0 0; font-size: var(--pt-body); line-height: 1.34; }
-/* Per-column evidence figures (elastic drop vs bubble) under the column heads */
-.p-compare__figrow { border-top: 0; align-items: end; padding: 4pt 0 6pt; }
-.p-compare__colfig { margin: 0; display: grid; place-items: center; min-width: 0; }
-.p-compare__colfig img { width: 100%; height: auto; max-height: var(--compare-fig-h, 86mm); display: block; }
-/* Compare band with the polymer schematic to the left of the grid */
-.p-compare-wrap { display: grid; grid-template-columns: auto 1fr; gap: var(--p-gutter); align-items: center; }
-.p-compare-main { min-width: 0; }
-.p-compare__fig { margin: 0; display: grid; place-items: center; }
-.p-compare__fig img { height: 82mm; width: auto; max-width: 100%; display: block; }
-.p-compare__fig .fig__cap { font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2); line-height: 1.32; padding: 9pt 0 0; border: 0; max-width: 150mm; }
-.p-compare__fig .fig__cap b { color: var(--c-accent-teal); font-weight: var(--t-weight-semi); }
+.p-c3__a { font-family: var(--t-sans); font-size: 23pt; color: var(--fg-1); line-height: 1.28; }
+.p-c3__a strong { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
+.p-compare__note { margin: 12pt 0 0; font-size: var(--pt-body); line-height: 1.34; }
 
 /* Card headings (scaling, synthesis) sit a step below section headings */
 .block--key .block__h { font-size: 31pt; }
@@ -304,55 +307,38 @@ function renderBlock(block: Block, opts: RenderOptions): string {
 </section>`;
     }
     case "compare": {
-      const head = `<div class="p-compare__row p-compare__row--head">
-    <div class="p-compare__rl"></div>
-    <div class="p-compare__c p-compare__c--a">${mathify(block.columns[0], opts)}</div>
-    <div class="p-compare__c p-compare__c--b">${mathify(block.columns[1], opts)}</div>
+      // Three-column grid. Col 1: the polymer schematic, then the question
+      // labels. Cols 2 & 3: the column head (Drop / Bubble) over a full-width
+      // evidence figure, then the answers. The grid auto-flows so every
+      // question lines up with its drop/bubble answers in a shared row.
+      const schBlend = block.figure?.blend === false ? "" : "mix-blend-mode:multiply;";
+      const schCap = block.figure?.caption
+        ? `<figcaption class="fig__cap">${mathify(block.figure.caption, opts)}</figcaption>`
+        : "";
+      const c1 = block.figure
+        ? `<figure class="p-c3__vis p-c3__schfig">${img(block.figure.src, block.figure.alt, opts, schBlend)}${schCap}</figure>`
+        : `<div class="p-c3__vis"></div>`;
+      const colVis = (f: typeof block.figureA, head: string, tone: "a" | "b") =>
+        `<div class="p-c3__vis">
+    <div class="p-c3__head p-c3__head--${tone}">${mathify(head, opts)}</div>
+    <figure class="p-c3__colfig">${f ? img(f.src, f.alt, opts, "mix-blend-mode:multiply;") : ""}</figure>
   </div>`;
-      const rows = block.rows
+      const top = `${c1}\n  ${colVis(block.figureA, block.columns[0], "a")}\n  ${colVis(block.figureB, block.columns[1], "b")}`;
+      const qrows = block.rows
         .map(
-          (r) => `<div class="p-compare__row">
-    <div class="p-compare__rl">${mathify(r.label, opts)}</div>
-    <div class="p-compare__c">${mathify(r.a, opts)}</div>
-    <div class="p-compare__c">${mathify(r.b, opts)}</div>
-  </div>`,
+          (r) => `<div class="p-c3__q">${mathify(r.label, opts)}</div>
+  <div class="p-c3__a">${mathify(r.a, opts)}</div>
+  <div class="p-c3__a">${mathify(r.b, opts)}</div>`,
         )
         .join("\n");
-      const colfig = (f?: typeof block.figureA) =>
-        f ? `<figure class="p-compare__colfig">${img(f.src, f.alt, opts, "mix-blend-mode:multiply;")}</figure>` : `<div></div>`;
-      const figrow = block.figureA || block.figureB
-        ? `<div class="p-compare__row p-compare__figrow">
-    <div class="p-compare__rl"></div>
-    ${colfig(block.figureA)}
-    ${colfig(block.figureB)}
-  </div>`
-        : "";
       const note = block.note ? `<p class="p-compare__note">${mathify(block.note, opts)}</p>` : "";
-      const grid = `<div class="p-compare">
-  ${head}
-  ${figrow}
-${rows}
-  </div>
-  ${note}`;
-      if (block.figure) {
-        const fcap = block.figure.caption
-          ? `<figcaption class="fig__cap">${mathify(block.figure.caption, opts)}</figcaption>`
-          : "";
-        const fblend = block.figure.blend === false ? "" : "mix-blend-mode:multiply;";
-        return `<section class="block block--key${band}">
-  ${heading(block.heading, opts)}
-  <div class="p-compare-wrap">
-    <figure class="p-compare__fig">
-      ${img(block.figure.src, block.figure.alt, opts, fblend)}
-      ${fcap}
-    </figure>
-    <div class="p-compare-main">${grid}</div>
-  </div>
-</section>`;
-      }
       return `<section class="block block--key${band}">
   ${heading(block.heading, opts)}
-  ${grid}
+  <div class="p-compare3">
+  ${top}
+${qrows}
+  </div>
+  ${note}
 </section>`;
     }
     case "references": {
