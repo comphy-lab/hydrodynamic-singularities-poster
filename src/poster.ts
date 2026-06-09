@@ -211,6 +211,15 @@ const POSTER_EXTRAS = `
 /* Card headings (scaling, synthesis) sit a step below section headings */
 .block--key .block__h { font-size: 31pt; }
 
+/* The pivot question — the hook that turns the phenomenon into the elasticity
+   twist. Sits on paper just above the "Elasticity is memory" band. */
+.p-pivot {
+  font-family: var(--t-serif); font-style: italic;
+  font-size: 35pt; line-height: 1.14; color: var(--fg-strong);
+  margin: 2mm 0 8mm;
+}
+.p-pivot em { font-style: italic; color: var(--c-accent-coral); }
+
 /* Full-width bands (direct children of poster__inner) */
 .poster__inner > .block { margin: 0; }
 .p-endmatter { display: flex; gap: var(--p-gutter); align-items: stretch; }
@@ -313,7 +322,8 @@ function renderBlock(block: Block, opts: RenderOptions): string {
       const items = block.items?.length
         ? `<ul>${block.items.map((li) => `<li>${mathify(li, opts)}</li>`).join("")}</ul>`
         : "";
-      return `<section class="block block--key${band}">
+      const kicker = block.kicker ? `<p class="p-pivot">${mathify(block.kicker, opts)}</p>` : "";
+      return `${kicker}<section class="block block--key${band}">
   ${heading(block.heading, opts)}
   ${body}
   ${items}

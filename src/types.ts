@@ -106,6 +106,8 @@ export interface KeyBlock {
   heading: string;
   body?: string[];
   items?: string[];
+  /** Optional pivot question rendered prominently just above the band. */
+  kicker?: string;
   /** For `column:"full"` bands: render before ("lead") or after ("tail", default) the body columns. */
   place?: "lead" | "tail";
 }

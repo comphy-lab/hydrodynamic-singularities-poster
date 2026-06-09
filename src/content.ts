@@ -76,7 +76,7 @@ export const poster: PosterContent = {
       },
     ],
     caption:
-      "Two free surfaces, the same finite-time blow-up: read left to right, $t=0$ is the singularity. They reach it by different routes (a drop along a thread, a bubble by collapsing a cavity), so they carry different exponents. <b>What if we gave the fluid a memory?</b>",
+      "Two free surfaces, the same finite-time blow-up: read left to right, $t=0$ is the singularity. They reach it by different routes (a drop along a thread, a bubble by collapsing a cavity), so they carry different exponents.",
   },
 
   blocks: [
@@ -85,6 +85,7 @@ export const poster: PosterContent = {
       kind: "key",
       column: "full",
       place: "lead",
+      kicker: "What if we gave the fluid a <em>memory</em>?",
       heading: "Elasticity is memory",
       body: [
         "Dissolve a few polymer chains and the liquid gains a memory — each chain stores its stretching history over a relaxation time $\\lambda$. Push to the perfectly elastic limit ($\\lambda \\to \\infty$, nothing is forgotten) and ask whether memory can outlast the singularity. It does for a drop, yet a dilute bubble pinches off as if the polymer were not there. Why the difference?",
