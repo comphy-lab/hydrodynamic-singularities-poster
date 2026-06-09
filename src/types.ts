@@ -131,8 +131,12 @@ export interface CompareBlock {
   rows: { label: string; a: string; b: string }[];
   /** Optional closing line under the grid. */
   note?: string;
-  /** Optional illustration rendered to the left of the grid. */
+  /** Optional illustration rendered to the left of the grid (the schematic). */
   figure?: Figure;
+  /** Optional per-column illustrations shown under the column heads — `figureA`
+   *  over the first column (Drop), `figureB` over the second (Bubble). */
+  figureA?: Figure;
+  figureB?: Figure;
   /** For `column:"full"` bands: render before ("lead") or after ("tail", default) the body columns. */
   place?: "lead" | "tail";
 }

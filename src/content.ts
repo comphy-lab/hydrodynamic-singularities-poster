@@ -51,7 +51,7 @@ export const poster: PosterContent = {
         scaling: "h \\sim (t_0-t)^{2/3}",
         note: "Plain water. Surface tension pulls a slender axial thread to a point, then it snaps into satellite drops — milliseconds.",
         figure: {
-          src: "assets/figures/hero_drop_pinchoff.png",
+          src: "assets/figures/hero_drop_pinchoff.svg",
           alt: "Time series of a Newtonian water drop pinching off, from −4.55 ms to 0.6 ms",
         },
       },
@@ -60,7 +60,7 @@ export const poster: PosterContent = {
         scaling: "h \\sim (t_0-t)^{1/2}",
         note: "Plain water. The surrounding liquid's inertia collapses the cavity radially — microseconds, a thousand times faster.",
         figure: {
-          src: "assets/figures/hero_bubble_pinchoff.png",
+          src: "assets/figures/hero_bubble_pinchoff.svg",
           alt: "Time series of a Newtonian bubble pinching off, from −20 µs to 7.5 µs",
         },
       },
@@ -127,10 +127,18 @@ export const poster: PosterContent = {
       column: "full",
       heading: "Why elasticity picks sides",
       figure: {
-        src: "assets/figures/pinchoff_schematic.png",
+        src: "assets/figures/pinchoff_schematic.svg",
         alt: "Schematic of drop and bubble pinch-off with polymer chains: relaxed coils in the bulk, stretched red chains at the neck",
         caption:
           "Polymers (blue coils) stretch where the neck thins (red): <b>along</b> the drop's axial thread, but only <b>sideways</b> across the bubble's neck.",
+      },
+      figureA: {
+        src: "assets/figures/drop_pinchoff-elastic.svg",
+        alt: "Elastic drop pinch-off: the neck is drawn into a persistent beads-on-a-string thread",
+      },
+      figureB: {
+        src: "assets/figures/bubble_pinchoff-elastic.svg",
+        alt: "Elastic bubble pinch-off: the cavity still collapses to a point despite the polymer",
       },
       columns: ["Drop", "Bubble"],
       rows: [

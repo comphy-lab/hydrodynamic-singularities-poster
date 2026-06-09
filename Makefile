@@ -38,20 +38,27 @@ logos:
 	done; \
 	[ -n "$$svgo" ] || echo "logos: svgo not found (run 'make setup'); SVGs left unoptimised (larger files)."
 
-# Regenerate the experiment figures from their PDF masters. Unlike the logos,
-# these PDFs are raster composites (microscopy filmstrips), so the build uses
-# high-DPI *transparent* PNGs, not SVG — SVG would only re-wrap the same pixels.
-# 220 dpi ≈ 275 effective DPI at the ~80 mm A0 display size; -transp keeps the
-# canvas/label transparency so the warm paper shows through. Requires pdftocairo
-# (poppler). The PDF masters are large (~54 MB); if they're not in the working
-# tree this target skips gracefully and the committed PNGs are used as-is.
+# Regenerate the science figures from their PDF masters. Each PDF is classified
+# automatically: a raster composite (the microscopy experiment filmstrips) ->
+# high-DPI *transparent* PNG (220 dpi ≈ 275 eff-DPI at A0; SVG would only re-wrap
+# the same pixels); a pure-vector figure (hero filmstrips, elastic-drop, polymer
+# schematic) -> optimised SVG, crisp at any size. Requires pdftocairo + pdfimages
+# (poppler); svgo (via `make setup`) shrinks the vector output. Skips gracefully
+# when a master isn't in the tree, leaving the committed asset as-is.
 figures:
-	@command -v pdftocairo >/dev/null 2>&1 || { echo "pdftocairo (poppler) not found; install it to regenerate figure PNGs."; exit 1; }
-	@for pdf in assets/figures/*_experiment_two_rows.pdf; do \
-		[ -e "$$pdf" ] || { echo "figures: no PDF masters in the tree; using committed PNGs."; break; }; \
+	@command -v pdftocairo >/dev/null 2>&1 || { echo "pdftocairo (poppler) not found."; exit 1; }
+	@svgo=$$(test -x node_modules/.bin/svgo && echo node_modules/.bin/svgo || command -v svgo || true); \
+	for pdf in assets/figures/*.pdf; do \
+		[ -e "$$pdf" ] || { echo "figures: no PDF masters in the tree; using committed assets."; break; }; \
 		stem=$${pdf%.pdf}; \
-		pdftocairo -png -transp -r 220 -singlefile "$$pdf" "$$stem"; \
-		echo "figures: $$pdf -> $$stem.png"; \
+		if pdfimages -list "$$pdf" 2>/dev/null | tail -n +3 | grep -q 'image'; then \
+			pdftocairo -png -transp -r 220 -singlefile "$$pdf" "$$stem"; \
+			echo "figures: $$pdf -> $$stem.png (raster)"; \
+		else \
+			pdftocairo -svg "$$pdf" "$$stem.svg"; \
+			[ -n "$$svgo" ] && "$$svgo" -q -p 2 --multipass "$$stem.svg" -o "$$stem.svg"; \
+			echo "figures: $$pdf -> $$stem.svg (vector)"; \
+		fi; \
 	done
 
 # One-off: install the TypeScript toolchain (tsx + typescript).

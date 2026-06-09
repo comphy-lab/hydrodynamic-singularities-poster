@@ -116,10 +116,13 @@ const POSTER_EXTRAS = `
    bubble), each with a left rail (what it is + its self-similar scaling). */
 .p-hero--strips { display: block; }
 .p-hero__lede {
-  font-size: 25pt; line-height: 1.34; max-width: 78ch;
+  font-size: 25pt; line-height: 1.34; max-width: none;
   margin: 0 0 var(--p-block);
 }
-.p-strips { display: flex; flex-direction: column; gap: 11mm; }
+/* Two strips side by side — drop left, bubble right — to mirror the
+   experiment columns below and keep the hero compact. */
+.p-strips { display: flex; flex-direction: row; gap: var(--p-gutter); align-items: stretch; }
+.p-strips > .p-strip { flex: 1; min-width: 0; }
 .p-strip {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -170,6 +173,10 @@ const POSTER_EXTRAS = `
 .p-compare__c--a { color: var(--c-accent-coral); }
 .p-compare__c--b { color: var(--c-accent-teal); }
 .p-compare__note { margin: 11pt 0 0; font-size: var(--pt-body); line-height: 1.34; }
+/* Per-column evidence figures (elastic drop vs bubble) under the column heads */
+.p-compare__figrow { border-top: 0; align-items: end; padding: 4pt 0 6pt; }
+.p-compare__colfig { margin: 0; display: grid; place-items: center; min-width: 0; }
+.p-compare__colfig img { width: 100%; height: auto; max-height: var(--compare-fig-h, 86mm); display: block; }
 /* Compare band with the polymer schematic to the left of the grid */
 .p-compare-wrap { display: grid; grid-template-columns: auto 1fr; gap: var(--p-gutter); align-items: center; }
 .p-compare-main { min-width: 0; }
@@ -311,9 +318,19 @@ function renderBlock(block: Block, opts: RenderOptions): string {
   </div>`,
         )
         .join("\n");
+      const colfig = (f?: typeof block.figureA) =>
+        f ? `<figure class="p-compare__colfig">${img(f.src, f.alt, opts, "mix-blend-mode:multiply;")}</figure>` : `<div></div>`;
+      const figrow = block.figureA || block.figureB
+        ? `<div class="p-compare__row p-compare__figrow">
+    <div class="p-compare__rl"></div>
+    ${colfig(block.figureA)}
+    ${colfig(block.figureB)}
+  </div>`
+        : "";
       const note = block.note ? `<p class="p-compare__note">${mathify(block.note, opts)}</p>` : "";
       const grid = `<div class="p-compare">
   ${head}
+  ${figrow}
 ${rows}
   </div>
   ${note}`;
