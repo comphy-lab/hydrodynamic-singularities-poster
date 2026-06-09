@@ -176,6 +176,8 @@ export interface Footer {
   qr: QR;
   /** Contact lines; HTML allowed (`.mono` for emails). */
   contact: string[];
+  /** Optional acknowledgements line shown in the footer (HTML allowed). */
+  ack?: string;
   partners: Logo[];
 }
 

@@ -166,26 +166,6 @@ export const poster: PosterContent = {
       note: "It is a race between the elastic stress and whatever drives the pinch: the drop's stress outgrows its capillary drive, the bubble's only ties its inertial drive. Same additive, opposite fate — and reading which singularities a touch of elasticity can rewrite is how we learn to control breakup: inkjet printing, sprays and aerosols.",
     },
 
-    // ---------- ENDMATTER ----------
-    {
-      kind: "references",
-      column: "full",
-      heading: "References",
-      items: [
-        "<b>Verschuur, C. I., Oratis, A. T., Sanjay, V. &amp; Snoeijer, J. H.</b> How elasticity affects bubble pinch-off. <i>arXiv</i>:2511.20075 (2026). <i>This work.</i>",
-        "<b>Eggers, J.</b> Nonlinear dynamics and breakup of free-surface flows. <i>Rev. Mod. Phys.</i> <b>69</b>, 865 (1997).",
-        "<b>Day, R. F., Hinch, E. J. &amp; Lister, J. R.</b> Self-similar capillary pinchoff of an inviscid fluid. <i>Phys. Rev. Lett.</i> <b>80</b>, 704 (1998).",
-        "<b>Burton, J. C., Waldrep, R. &amp; Taborek, P.</b> Scaling and instabilities in bubble pinch-off. <i>Phys. Rev. Lett.</i> <b>94</b>, 184502 (2005).",
-        "<b>Clasen, C.</b> et al. The beads-on-string structure of viscoelastic threads. <i>J. Fluid Mech.</i> <b>556</b>, 283 (2006).",
-        "<b>Eggers, J., Herrada, M. A. &amp; Snoeijer, J. H.</b> Self-similar breakup of polymeric threads (Oldroyd-B). <i>J. Fluid Mech.</i> <b>887</b>, A19 (2020).",
-      ],
-    },
-    {
-      kind: "acknowledgements",
-      column: "full",
-      heading: "Acknowledgements",
-      body: "Simulations with <b>Basilisk C</b> (Popinet, <i>J. Comput. Phys.</i> <b>228</b>, 5838, 2009) on Durham's <b>Hamilton</b> HPC. A CoMPhy Lab (Durham) × Physics of Fluids (Twente) collaboration.",
-    },
   ],
 
   footer: {
@@ -199,6 +179,7 @@ export const poster: PosterContent = {
       "<b>Vatsal Sanjay</b> · CoMPhy Lab, Department of Physics, Durham University",
       "<span class=\"mono\">vatsal.sanjay@comphy-lab.org</span>",
     ],
+    ack: "Simulations with <b>Basilisk C</b> (Popinet, <i>J. Comput. Phys.</i> <b>228</b>, 5838, 2009) on Durham's <b>Hamilton</b> HPC. A CoMPhy Lab (Durham) × Physics of Fluids (Twente) collaboration.",
     partners: [
       { src: "assets/logos/durham-university.svg", alt: "Durham University", treatment: "multiply" },
       { src: "assets/logos/physics-of-fluids.svg", alt: "Physics of Fluids", treatment: "normal" },

@@ -33,7 +33,7 @@ const POSTER_EXTRAS = `
 /* Tighten the A0 rhythm — this poster is content-dense, so trim the outer
    margin, the inter-block gap and the column gutter to keep everything on one
    sheet without overflow. */
-:root { --p-pad: 30mm; --p-block: 10mm; --p-gutter: 22mm; }
+:root { --p-pad: 30mm; --p-block: 17mm; --p-gutter: 22mm; }
 
 /* Header — tighten the lockup so the title block doesn't eat the sheet */
 .p-header { padding-bottom: 11mm; }
@@ -95,8 +95,21 @@ const POSTER_EXTRAS = `
    figure / caption / verdict can never be clipped behind the bands below it.
    The poster then fills via its bands + a small uniform bottom margin. */
 .p-body { flex: 0 0 auto; }
-/* Footer now carries just contact + partner marks (QR moved to the masthead) */
-.p-footer { margin-top: auto; grid-template-columns: 1fr auto; }
+/* Footer — contact + acknowledgements (left) and partner marks (right),
+   enlarged now that the references/acks blocks are gone. QR is in the masthead. */
+.p-footer {
+  margin-top: auto; grid-template-columns: 1fr auto;
+  gap: var(--p-gutter); align-items: center;
+  padding-top: 15mm; border-top: 3px solid var(--c-border-strong);
+}
+.p-footer .p-contact { font-size: 26pt; line-height: 1.4; }
+.p-foot__ack {
+  font-family: var(--t-sans); font-size: 21pt; line-height: 1.4;
+  color: var(--fg-2); margin: 12pt 0 0;
+}
+.p-foot__ack b { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
+.p-footer .p-funding { gap: 34pt; }
+.p-footer .p-funding img { height: 40mm; }
 
 /* Partner-mark treatments so each sits cleanly on warm paper */
 .p-partner--multiply { mix-blend-mode: multiply; }
@@ -442,8 +455,12 @@ ${strips}
 function renderFooter(content: PosterContent, opts: RenderOptions): string {
   const { footer } = content;
   const partners = footer.partners.map((p) => logoImg(p, opts)).join("\n      ");
+  const ack = footer.ack ? `<p class="p-foot__ack">${mathify(footer.ack, opts)}</p>` : "";
   return `<footer class="p-footer">
-  <div class="p-contact">${footer.contact.join("<br />")}</div>
+  <div class="p-foot__text">
+    <div class="p-contact">${footer.contact.join("<br />")}</div>
+    ${ack}
+  </div>
   <div class="p-funding">
       ${partners}
   </div>
