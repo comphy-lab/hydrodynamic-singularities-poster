@@ -173,7 +173,7 @@ export const poster: PosterContent = {
           b: "<strong>same</strong> rate (2 vs 2): it pinches; singularity survives",
         },
       ],
-      note: "It is a race between the elastic stress and whatever drives the pinch: the drop's stress outgrows its capillary drive, the bubble's only ties its inertial drive. Same additive, opposite fate — and reading which singularities a touch of elasticity can rewrite is how we learn to control breakup: inkjet printing, sprays and aerosols.",
+      note: "The elastic stress in a drop outgrows its capillary drive, while that in a bubble just balances its inertial drive.<br />Same additive (polymers), contrasting fates — reading how elasticity rewrites singularities can teach us to control breakup, critical for inkjet printing, sprays and aerosols.",
     },
 
   ],
