@@ -168,7 +168,7 @@ const POSTER_EXTRAS = `
    width its height equals the Drop/Bubble figure height; the near-square
    schematic is centred inside it. */
 .p-c3__schbox { aspect-ratio: 468 / 258; display: grid; place-items: center; }
-.p-c3__schbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
+.p-c3__schbox img { height: 100%; width: auto; max-width: 100%; display: block; }
 .p-c3__schfig .fig__cap {
   font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2);
   line-height: 1.32; padding: 8pt 0 0; border: 0;
