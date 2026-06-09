@@ -37,7 +37,7 @@ export const poster: PosterContent = {
       { mark: "", text: "CoMPhy Lab, Department of Physics, Durham University" },
     ],
     collaborators:
-      "With <b>Coen I. Verschuur</b>, <b>Alexandros T. Oratis</b> &amp; <b>Jacco H. Snoeijer</b> — Physics of Fluids, University of Twente",
+      "With <b>Coen I. Verschuur</b>, <b>Alexandros T. Oratis</b> &amp; <b>Jacco H. Snoeijer</b><br />Physics of Fluids, University of Twente",
   },
 
   labMark: { src: "assets/logos/comphy-mark.svg", alt: "CoMPhy Lab" },
