@@ -33,7 +33,7 @@ const POSTER_EXTRAS = `
 /* Tighten the A0 rhythm — this poster is content-dense, so trim the outer
    margin, the inter-block gap and the column gutter to keep everything on one
    sheet without overflow. */
-:root { --p-pad: 30mm; --p-block: 17mm; --p-gutter: 22mm; }
+:root { --p-pad: 30mm; --p-block: 11mm; --p-gutter: 22mm; }
 
 /* Header — tighten the lockup so the title block doesn't eat the sheet */
 .p-header { padding-bottom: 11mm; }
@@ -100,16 +100,16 @@ const POSTER_EXTRAS = `
 .p-footer {
   margin-top: auto; grid-template-columns: 1fr auto;
   gap: var(--p-gutter); align-items: center;
-  padding-top: 15mm; border-top: 3px solid var(--c-border-strong);
+  padding-top: 9mm; border-top: 2.5px solid var(--c-border-strong);
 }
-.p-footer .p-contact { font-size: 26pt; line-height: 1.4; }
+.p-footer .p-contact { font-size: 22pt; line-height: 1.4; }
 .p-foot__ack {
-  font-family: var(--t-sans); font-size: 21pt; line-height: 1.4;
-  color: var(--fg-2); margin: 12pt 0 0;
+  font-family: var(--t-sans); font-size: 18pt; line-height: 1.38;
+  color: var(--fg-2); margin: 7pt 0 0;
 }
 .p-foot__ack b { color: var(--fg-strong); font-weight: var(--t-weight-semi); }
-.p-footer .p-funding { gap: 34pt; }
-.p-footer .p-funding img { height: 40mm; }
+.p-footer .p-funding { gap: 28pt; }
+.p-footer .p-funding img { height: 30mm; }
 
 /* Partner-mark treatments so each sits cleanly on warm paper */
 .p-partner--multiply { mix-blend-mode: multiply; }
@@ -121,11 +121,11 @@ const POSTER_EXTRAS = `
    block sits to its left, filling what used to be masthead whitespace. */
 .p-header { align-items: center; }
 .p-logos { flex-direction: row; align-items: center; gap: var(--p-gutter); }
-.p-logos__lab img { height: 104mm; }
+.p-logos__lab img { height: 88mm; }
 /* Two stacked header QRs: "Find the lab" + "Read more" (the paper). */
-.p-qrs { display: flex; flex-direction: column; gap: 12pt; }
-.p-header .qr { gap: 13pt; }
-.p-header .qr__code { width: 42mm; height: 42mm; }
+.p-qrs { display: flex; flex-direction: column; gap: 10pt; }
+.p-header .qr { gap: 12pt; }
+.p-header .qr__code { width: 38mm; height: 38mm; }
 .p-header .qr__label { max-width: 92mm; }
 
 /* Hero: the phenomenon first — two stacked pinch-off filmstrips (drop, then
@@ -214,9 +214,14 @@ const POSTER_EXTRAS = `
 /* The pivot question — the hook that turns the phenomenon into the elasticity
    twist. Sits on paper just above the "Elasticity is memory" band. */
 .p-pivot {
+  width: fit-content; max-width: 86%;
+  margin: 5mm auto 9mm; padding: 6mm 20mm;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--c-accent-coral) 7%, var(--c-surface-strong));
+  border: 2px solid color-mix(in srgb, var(--c-accent-coral) 30%, transparent);
   font-family: var(--t-serif); font-style: italic;
-  font-size: 35pt; line-height: 1.14; color: var(--fg-strong);
-  margin: 2mm 0 8mm;
+  font-size: 33pt; line-height: 1.1; color: var(--fg-strong);
+  text-align: center;
 }
 .p-pivot em { font-style: italic; color: var(--c-accent-coral); }
 
