@@ -164,7 +164,11 @@ const POSTER_EXTRAS = `
 .p-compare3 > .p-c3__vis { align-self: end; }
 .p-c3__vis { min-width: 0; margin: 0; }
 .p-c3__schfig { display: block; }
-.p-c3__schfig img { width: auto; max-width: 100%; max-height: var(--c3-sch-h, 118mm); display: block; }
+/* The schbox carries the filmstrip aspect ratio (468:258), so at full column
+   width its height equals the Drop/Bubble figure height; the near-square
+   schematic is centred inside it. */
+.p-c3__schbox { aspect-ratio: 468 / 258; display: grid; place-items: center; }
+.p-c3__schbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
 .p-c3__schfig .fig__cap {
   font-family: var(--t-sans); font-size: var(--pt-small); color: var(--fg-2);
   line-height: 1.32; padding: 8pt 0 0; border: 0;
@@ -316,7 +320,10 @@ function renderBlock(block: Block, opts: RenderOptions): string {
         ? `<figcaption class="fig__cap">${mathify(block.figure.caption, opts)}</figcaption>`
         : "";
       const c1 = block.figure
-        ? `<figure class="p-c3__vis p-c3__schfig">${img(block.figure.src, block.figure.alt, opts, schBlend)}${schCap}</figure>`
+        ? `<figure class="p-c3__vis p-c3__schfig">
+    <div class="p-c3__schbox">${img(block.figure.src, block.figure.alt, opts, schBlend)}</div>
+    ${schCap}
+  </figure>`
         : `<div class="p-c3__vis"></div>`;
       const colVis = (f: typeof block.figureA, head: string, tone: "a" | "b") =>
         `<div class="p-c3__vis">
