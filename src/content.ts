@@ -49,7 +49,7 @@ export const poster: PosterContent = {
       "Verschuur, C. I., Oratis, A. T., Sanjay, V. &amp; Snoeijer, J. H. How elasticity affects bubble pinch-off.",
       "arXiv:2511.20075 (2025)",
     ],
-    img: "assets/figures/qr-arxiv.png",
+    img: "assets/figures/qr-arxiv.svg",
   },
 
   hero: {
@@ -183,7 +183,7 @@ export const poster: PosterContent = {
       url: "https://comphy-lab.org",
       title: "Find the lab",
       lines: ["Papers, code & simulations", "comphy-lab.org"],
-      img: "assets/figures/qr.png",
+      img: "assets/figures/qr.svg",
     },
     contact: [
       "<b>Vatsal Sanjay</b> · CoMPhy Lab, Department of Physics, Durham University",

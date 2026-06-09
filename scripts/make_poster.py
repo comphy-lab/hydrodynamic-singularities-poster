@@ -7,7 +7,7 @@ source into print-ready artifacts.
 
 Pipeline
 --------
-1. (optional) generate a QR code to the lab site            -> assets/figures/qr.png
+1. (optional) generate vector QR codes (lab site + paper)   -> assets/figures/qr*.svg
 2. build the standalone poster HTML via the TS build        -> outputs/poster.html
 3. render true-A0 PDF with headless Chrome (``@page`` size)  -> outputs/<stem>.pdf
 4. rasterise a preview PNG (pdftoppm, else Chrome, else sips)-> outputs/<stem>.png
@@ -39,11 +39,14 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "outputs"
 HTML = OUTPUT_DIR / "poster.html"
 STEM = "hydrodynamic_singularities_poster"
-# (url, output path) for each masthead QR: the lab site and the paper.
+# (url, output path) for each masthead QR: the lab site and the paper. Rendered
+# as crisp vector SVG (a QR is just squares) in the lab's ink/paper colours.
 QR_CODES = [
-    ("https://comphy-lab.org", ROOT / "assets" / "figures" / "qr.png"),
-    ("https://arxiv.org/abs/2511.20075", ROOT / "assets" / "figures" / "qr-arxiv.png"),
+    ("https://comphy-lab.org", ROOT / "assets" / "figures" / "qr.svg"),
+    ("https://arxiv.org/abs/2511.20075", ROOT / "assets" / "figures" / "qr-arxiv.svg"),
 ]
+_QR_DARK = "#0f0c08"
+_QR_LIGHT = "#fffdf9"
 
 A0_PORTRAIT_PT = (2383.94, 3370.39)  # 841 x 1189 mm in points
 
@@ -81,22 +84,46 @@ def parse_args() -> argparse.Namespace:
 # --------------------------------------------------------------------------- #
 # step 1 — QR code                                                            #
 # --------------------------------------------------------------------------- #
-def _qr_snippet(target: str, path: Path) -> str:
+def _qr_svg_body(matrix) -> str:
+    """One <path> of unit squares (the dark modules) on a light <rect>, in a
+    viewBox of one unit per module — crisp at any size."""
+    n = len(matrix)
+    d = "".join(
+        f"M{x} {y}h1v1h-1z"
+        for y, row in enumerate(matrix)
+        for x, cell in enumerate(row)
+        if cell
+    )
     return (
-        "import qrcode\n"
-        "from qrcode.constants import ERROR_CORRECT_M\n"
-        "qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=22, border=2)\n"
-        f"qr.add_data({target!r})\n"
-        "qr.make(fit=True)\n"
-        f"qr.make_image(fill_color='#0f0c08', back_color='#fffdf9').save({str(path)!r})\n"
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{n}" height="{n}" '
+        f'viewBox="0 0 {n} {n}" shape-rendering="crispEdges">'
+        f'<rect width="{n}" height="{n}" fill="{_QR_LIGHT}"/>'
+        f'<path d="{d}" fill="{_QR_DARK}"/></svg>'
     )
 
 
+# Inline program for the `uv` fallback (no qrcode in the current interpreter).
+# Args: url, out-path, dark, light — passed via argv to dodge quote-escaping.
+_QR_SNIPPET = "\n".join([
+    "import sys, qrcode",
+    "from qrcode.constants import ERROR_CORRECT_M",
+    "url, out, dark, light = sys.argv[1:5]",
+    "q = qrcode.QRCode(error_correction=ERROR_CORRECT_M, border=2)",
+    "q.add_data(url); q.make(fit=True)",
+    "m = q.get_matrix(); n = len(m)",
+    "d = ''.join('M%d %dh1v1h-1z' % (x, y) for y, row in enumerate(m) for x, c in enumerate(row) if c)",
+    "svg = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%d\" height=\"%d\" viewBox=\"0 0 %d %d\" shape-rendering=\"crispEdges\">' % (n, n, n, n)",
+    "svg += '<rect width=\"%d\" height=\"%d\" fill=\"%s\"/>' % (n, n, light)",
+    "svg += '<path d=\"%s\" fill=\"%s\"/></svg>' % (d, dark)",
+    "open(out, 'w').write(svg)",
+])
+
+
 def generate_qr() -> None:
-    """Render the masthead QR codes (lab site + paper).
+    """Render the masthead QR codes (lab site + paper) as vector SVG.
 
     Tries the current interpreter, then an isolated ``uv`` env (no global
-    install needed), then keeps any committed PNGs, then falls back to the
+    install needed), then keeps any committed SVGs, then falls back to the
     finder-pattern placeholder baked into poster.css.
     """
     try:
@@ -104,10 +131,10 @@ def generate_qr() -> None:
         from qrcode.constants import ERROR_CORRECT_M
         for target, path in QR_CODES:
             path.parent.mkdir(parents=True, exist_ok=True)
-            qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=22, border=2)
-            qr.add_data(target)
-            qr.make(fit=True)
-            qr.make_image(fill_color="#0f0c08", back_color="#fffdf9").save(path)
+            q = qrcode.QRCode(error_correction=ERROR_CORRECT_M, border=2)
+            q.add_data(target)
+            q.make(fit=True)
+            path.write_text(_qr_svg_body(q.get_matrix()))
             log(f"QR -> {path.relative_to(ROOT)}  ({target})")
         return
     except ModuleNotFoundError:
@@ -117,7 +144,8 @@ def generate_qr() -> None:
         for target, path in QR_CODES:
             path.parent.mkdir(parents=True, exist_ok=True)
             try:
-                subprocess.run(["uv", "run", "--quiet", "--with", "qrcode[pil]", "python", "-c", _qr_snippet(target, path)],
+                subprocess.run(["uv", "run", "--quiet", "--with", "qrcode", "python", "-c", _QR_SNIPPET,
+                                target, str(path), _QR_DARK, _QR_LIGHT],
                                check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 log(f"QR -> {path.relative_to(ROOT)}  (via uv · {target})")
             except subprocess.CalledProcessError:
@@ -128,7 +156,7 @@ def generate_qr() -> None:
     if missing:
         log(f"qrcode & uv unavailable — missing {missing}; using placeholders.")
     else:
-        log("Using the committed QR PNGs (install qrcode[pil] or uv to regenerate).")
+        log("Using the committed QR SVGs (install qrcode or uv to regenerate).")
 
 
 # --------------------------------------------------------------------------- #
