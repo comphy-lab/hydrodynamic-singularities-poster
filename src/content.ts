@@ -54,7 +54,7 @@ export const poster: PosterContent = {
 
   hero: {
     lede:
-      "A <strong>singularity</strong> is when a smooth physical process blows up — something finite becomes infinite in a finite time or at a finite place. As a drop or a bubble pinches off, the neck radius $h$ races to zero and the shape turns self-similar, $h \\sim (t_0-t)^{\\alpha}$: a universal form set only by the local balance of inertia, surface tension and viscosity. The flow <strong>forgets how it began</strong>. Singularities erase a fluid's memory.",
+      "A <strong>singularity</strong> is when a smooth physical process blows up — something finite becomes infinite in a finite time or at a finite place. As a drop or a bubble pinches off, the neck radius $h$ races to zero at a finite pinch time $t_0$, and the shape turns self-similar in the time-to-singularity $t_0-t$: $h \\sim (t_0-t)^{\\alpha}$, a universal form set only by the local balance of inertia, surface tension and viscosity. The flow <strong>forgets how it began</strong>. Singularities erase a fluid's memory.",
     strips: [
       {
         label: "A <strong>drop</strong> pinches off",
@@ -76,7 +76,7 @@ export const poster: PosterContent = {
       },
     ],
     caption:
-      "Two free surfaces, the same finite-time blow-up: read left to right, $t=0$ is the singularity. They reach it by different routes (a drop along a thread, a bubble by collapsing a cavity), so they carry different exponents.",
+      "Two free surfaces, the same finite-time blow-up: read left to right, the singularity is reached at $t = t_0$. They take different routes to it (a drop along a thread, a bubble by collapsing a cavity), so they carry different exponents in the time-to-singularity $t_0-t$.",
   },
 
   blocks: [
