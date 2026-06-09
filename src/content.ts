@@ -190,7 +190,7 @@ export const poster: PosterContent = {
       "<b>Vatsal Sanjay</b> · CoMPhy Lab, Department of Physics, Durham University",
       "<span class=\"mono\">vatsal.sanjay@comphy-lab.org</span>",
     ],
-    ack: "Simulations with <b>Basilisk C</b> (Popinet, <i>J. Comput. Phys.</i> <b>228</b>, 5838, 2009) on Durham's <b>Hamilton</b> HPC. A CoMPhy Lab (Durham) × Physics of Fluids (Twente) collaboration. Poster designed and built using <b>Claude Code &amp; Design</b>.",
+    ack: "Simulations with <b>Basilisk C</b> (Popinet, <i>J. Comput. Phys.</i> <b>228</b>, 5838, 2009) on Durham's <b>Hamilton</b> HPC. A CoMPhy Lab (Durham) × Physics of Fluids (Twente) collaboration.<br />Poster designed and built using <b>Claude Code &amp; Design</b>.",
     partners: [
       { src: "assets/logos/durham-university.svg", alt: "Durham University", treatment: "multiply" },
       { src: "assets/logos/physics-of-fluids.svg", alt: "Physics of Fluids", treatment: "normal" },
