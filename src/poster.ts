@@ -82,6 +82,10 @@ const POSTER_EXTRAS = `
    image height via --fig-fill-h so the drop and bubble cards match exactly. */
 .fig--fill .fig__bed { padding: 0 4mm; height: var(--fig-fill-h, 140mm); }
 .fig--fill .fig__bed img { width: 100%; height: 100%; object-fit: contain; }
+/* In the drop/bubble compare columns, anchor the figure + caption + verdict to
+   the bottom so both cards align exactly regardless of how the intro text wraps;
+   the body sits at the top and any slack falls between body and figure. */
+.block--grow .fig { margin-top: auto; }
 
 /* Columns: top-pack with a uniform gap (the .p-col gap drives spacing) */
 .p-cols .p-col { justify-content: flex-start; }

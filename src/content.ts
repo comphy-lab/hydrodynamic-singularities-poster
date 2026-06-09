@@ -85,9 +85,10 @@ export const poster: PosterContent = {
     {
       kind: "section",
       column: "left",
+      grow: true,
       heading: "The drop remembers",
       body: [
-        "A water drop reaches a genuine finite-time singularity. The pinch is capillary-driven, so the neck thins into a slender axial thread and the polymers stretch <em>along</em> it as it closes.",
+        "A water drop reaches a finite-time singularity, $h \\sim (t_0-t)^{2/3}$. The pinch is capillary-driven, so the neck thins into a slender axial thread and the polymers stretch <em>along</em> it as it closes.",
         "The elastic stress then diverges as $\\sigma_{zz} \\sim G\\,(h_0/h)^{4}$ — faster than the capillary drive $\\gamma\\kappa \\sim \\gamma/h$ it fights. It must win: the collapse is arrested into a long-lived <strong>beads-on-a-string</strong> thread, and in the perfectly elastic limit the singularity is removed altogether.",
       ],
       figure: {
@@ -104,10 +105,11 @@ export const poster: PosterContent = {
     {
       kind: "section",
       column: "right",
+      grow: true,
       heading: "The bubble forgets anyway",
       body: [
         "A bubble neck pinches just as sharply, $h \\sim (t_0-t)^{1/2}$, but the collapse is driven by the liquid's inertia and the cavity closes <em>radially</em>, so the polymers stretch sideways rather than along a thread.",
-        "Now the elastic stress diverges only as $\\sigma_{rr} \\sim G\\,(h_0/h)^{2}$ — the <em>same</em> rate as the inertial drive $\\sigma_I \\sim \\rho\\dot h^{2}$. A fair race it cannot win: it stays subdominant, so the bubble reaches its singularity <strong>with or without memory</strong>. A thread needs high concentration, and even then its fate hangs on the needle size.",
+        "Now the elastic stress diverges only as $\\sigma_{rr} \\sim G\\,(h_0/h)^{2}$ — the <em>same</em> rate as the inertial drive $\\sigma_I \\sim \\rho\\dot h^{2}$. A fair race it cannot win: it stays subdominant, so the bubble reaches its singularity <strong>with or without memory</strong>.",
       ],
       figure: {
         src: "assets/figures/bubble_experiment_two_rows.png",
