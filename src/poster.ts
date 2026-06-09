@@ -122,8 +122,11 @@ const POSTER_EXTRAS = `
 .p-header { align-items: center; }
 .p-logos { flex-direction: row; align-items: center; gap: var(--p-gutter); }
 .p-logos__lab img { height: 104mm; }
-.p-header .qr { gap: 14pt; }
-.p-header .qr__code { width: 46mm; height: 46mm; }
+/* Two stacked header QRs: "Find the lab" + "Read more" (the paper). */
+.p-qrs { display: flex; flex-direction: column; gap: 12pt; }
+.p-header .qr { gap: 13pt; }
+.p-header .qr__code { width: 42mm; height: 42mm; }
+.p-header .qr__label { max-width: 92mm; }
 
 /* Hero: the phenomenon first — two stacked pinch-off filmstrips (drop, then
    bubble), each with a left rail (what it is + its self-similar scaling). */
@@ -409,7 +412,10 @@ function renderHeader(content: PosterContent, opts: RenderOptions): string {
     ${collab}
   </div>
   <div class="p-logos">
-    ${qrBlock(content.footer.qr, opts)}
+    <div class="p-qrs">
+      ${qrBlock(content.footer.qr, opts)}
+      ${content.paperQr ? qrBlock(content.paperQr, opts) : ""}
+    </div>
     <div class="p-logos__lab">${logoImg(labMark, opts)}</div>
   </div>
 </header>`;

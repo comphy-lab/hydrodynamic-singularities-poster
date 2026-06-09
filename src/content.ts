@@ -42,6 +42,16 @@ export const poster: PosterContent = {
 
   labMark: { src: "assets/logos/comphy-mark.svg", alt: "CoMPhy Lab" },
 
+  paperQr: {
+    url: "https://arxiv.org/abs/2511.20075",
+    title: "Read more",
+    lines: [
+      "Verschuur, C. I., Oratis, A. T., Sanjay, V. &amp; Snoeijer, J. H. How elasticity affects bubble pinch-off.",
+      "arXiv:2511.20075 (2025)",
+    ],
+    img: "assets/figures/qr-arxiv.png",
+  },
+
   hero: {
     lede:
       "A <strong>singularity</strong> is when a smooth physical process blows up — something finite becomes infinite in a finite time or at a finite place. As a drop or a bubble pinches off, the neck radius $h$ races to zero and the shape turns self-similar, $h \\sim (t_0-t)^{\\alpha}$: a universal form set only by the local balance of inertia, surface tension and viscosity. The flow <strong>forgets how it began</strong>. Singularities erase a fluid's memory.",

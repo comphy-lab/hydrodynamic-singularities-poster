@@ -39,8 +39,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "outputs"
 HTML = OUTPUT_DIR / "poster.html"
 STEM = "hydrodynamic_singularities_poster"
-QR_TARGET = "https://comphy-lab.org"
-QR_PATH = ROOT / "assets" / "figures" / "qr.png"
+# (url, output path) for each masthead QR: the lab site and the paper.
+QR_CODES = [
+    ("https://comphy-lab.org", ROOT / "assets" / "figures" / "qr.png"),
+    ("https://arxiv.org/abs/2511.20075", ROOT / "assets" / "figures" / "qr-arxiv.png"),
+]
 
 A0_PORTRAIT_PT = (2383.94, 3370.39)  # 841 x 1189 mm in points
 
@@ -78,48 +81,54 @@ def parse_args() -> argparse.Namespace:
 # --------------------------------------------------------------------------- #
 # step 1 — QR code                                                            #
 # --------------------------------------------------------------------------- #
-_QR_SNIPPET = (
-    "import qrcode\n"
-    "from qrcode.constants import ERROR_CORRECT_M\n"
-    "qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=22, border=2)\n"
-    f"qr.add_data({QR_TARGET!r})\n"
-    "qr.make(fit=True)\n"
-    f"qr.make_image(fill_color='#0f0c08', back_color='#fffdf9').save({str(QR_PATH)!r})\n"
-)
+def _qr_snippet(target: str, path: Path) -> str:
+    return (
+        "import qrcode\n"
+        "from qrcode.constants import ERROR_CORRECT_M\n"
+        "qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=22, border=2)\n"
+        f"qr.add_data({target!r})\n"
+        "qr.make(fit=True)\n"
+        f"qr.make_image(fill_color='#0f0c08', back_color='#fffdf9').save({str(path)!r})\n"
+    )
 
 
 def generate_qr() -> None:
-    """Render a tidy QR to the lab site.
+    """Render the masthead QR codes (lab site + paper).
 
     Tries the current interpreter, then an isolated ``uv`` env (no global
-    install needed), then keeps any committed QR, then falls back to the
+    install needed), then keeps any committed PNGs, then falls back to the
     finder-pattern placeholder baked into poster.css.
     """
-    QR_PATH.parent.mkdir(parents=True, exist_ok=True)
     try:
         import qrcode
         from qrcode.constants import ERROR_CORRECT_M
-        qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=22, border=2)
-        qr.add_data(QR_TARGET)
-        qr.make(fit=True)
-        qr.make_image(fill_color="#0f0c08", back_color="#fffdf9").save(QR_PATH)
-        log(f"QR -> {QR_PATH.relative_to(ROOT)}  ({QR_TARGET})")
+        for target, path in QR_CODES:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=22, border=2)
+            qr.add_data(target)
+            qr.make(fit=True)
+            qr.make_image(fill_color="#0f0c08", back_color="#fffdf9").save(path)
+            log(f"QR -> {path.relative_to(ROOT)}  ({target})")
         return
     except ModuleNotFoundError:
         pass
     if shutil.which("uv"):
-        try:
-            subprocess.run(["uv", "run", "--quiet", "--with", "qrcode[pil]", "python", "-c", _QR_SNIPPET],
-                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            if QR_PATH.exists():
-                log(f"QR -> {QR_PATH.relative_to(ROOT)}  (via uv · {QR_TARGET})")
-                return
-        except subprocess.CalledProcessError:
-            pass
-    if QR_PATH.exists():
-        log("Using the committed assets/figures/qr.png (install qrcode[pil] or uv to regenerate).")
+        ok = True
+        for target, path in QR_CODES:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                subprocess.run(["uv", "run", "--quiet", "--with", "qrcode[pil]", "python", "-c", _qr_snippet(target, path)],
+                               check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                log(f"QR -> {path.relative_to(ROOT)}  (via uv · {target})")
+            except subprocess.CalledProcessError:
+                ok = False
+        if ok:
+            return
+    missing = [str(p.relative_to(ROOT)) for _, p in QR_CODES if not p.exists()]
+    if missing:
+        log(f"qrcode & uv unavailable — missing {missing}; using placeholders.")
     else:
-        log("qrcode & uv unavailable — using the finder-pattern placeholder.")
+        log("Using the committed QR PNGs (install qrcode[pil] or uv to regenerate).")
 
 
 # --------------------------------------------------------------------------- #

@@ -188,4 +188,6 @@ export interface PosterContent {
   hero: Hero;
   blocks: Block[];
   footer: Footer;
+  /** Optional second header QR — e.g. "Read more" linking to the paper. */
+  paperQr?: QR;
 }
