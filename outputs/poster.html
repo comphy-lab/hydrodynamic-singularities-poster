@@ -1071,16 +1071,24 @@ body.embed .toolbar { display: none; }
 /* The pivot question — the hook that turns the phenomenon into the elasticity
    twist. Sits on paper just above the "Elasticity is memory" band. */
 .p-pivot {
-  width: fit-content; max-width: 86%;
-  margin: 5mm auto 9mm; padding: 6mm 20mm;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--c-accent-coral) 7%, var(--c-surface-strong));
-  border: 2px solid color-mix(in srgb, var(--c-accent-coral) 30%, transparent);
-  font-family: var(--t-serif); font-style: italic;
-  font-size: 33pt; line-height: 1.1; color: var(--fg-strong);
-  text-align: center;
+  display: flex; align-items: center; gap: 16pt;
+  width: fit-content; max-width: 92%;
+  margin: 3mm auto 7mm; padding: 8mm 22mm;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--c-accent-coral) 8%, var(--c-surface-strong));
+  border: 2px solid color-mix(in srgb, var(--c-accent-coral) 32%, transparent);
+  font-family: var(--t-serif);
+  font-size: 39pt; line-height: 1.05; color: var(--fg-strong);
 }
-.p-pivot em { font-style: italic; color: var(--c-accent-coral); }
+.p-pivot::before {
+  content: "Q"; flex: 0 0 auto;
+  display: grid; place-items: center;
+  width: 1.35em; height: 1.35em;
+  background: var(--c-accent-coral); color: var(--c-surface-strong);
+  border-radius: var(--r-xs);
+  font-weight: var(--t-weight-bold); font-size: 0.82em; line-height: 1;
+}
+.p-pivot em { font-style: normal; color: var(--c-accent-coral); font-weight: var(--t-weight-semi); }
 
 /* Full-width bands (direct children of poster__inner) */
 .poster__inner > .block { margin: 0; }
