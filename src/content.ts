@@ -188,7 +188,7 @@ export const poster: PosterContent = {
     },
     contact: [
       "<b>Vatsal Sanjay</b> · CoMPhy Lab, Department of Physics, Durham University",
-      "<span class=\"mono\">vatsal.sanjay@comphy-lab.org</span>",
+      "<span class=\"mono\">vatsal.sanjay@durham.ac.uk</span>",
     ],
     ack: "Simulations with <b>Basilisk C</b> (Popinet, <i>J. Comput. Phys.</i> <b>228</b>, 5838, 2009) on Durham's <b>Hamilton</b> HPC. A CoMPhy Lab (Durham) × Physics of Fluids (Twente) collaboration.<br />Poster designed and built using <b>Claude Code &amp; Design</b>.",
     partners: [
