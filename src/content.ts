@@ -88,7 +88,7 @@ export const poster: PosterContent = {
       kicker: "What if we gave the fluid a <em>memory</em>?",
       heading: "Elasticity is memory",
       body: [
-        "Dissolve a few polymer chains and the liquid gains a memory — each chain stores its stretching history over a relaxation time $\\lambda$. Push to the perfectly elastic limit ($\\lambda \\to \\infty$, nothing is forgotten) and ask whether memory can outlast the singularity. It does for a drop, yet a dilute bubble pinches off as if the polymer were not there. Why the difference?",
+        "Dissolve a small amount of polymer and the liquid gains a memory — each chain stores its stretching history over a relaxation time $\\lambda$. Push to the perfectly elastic limit ($\\lambda \\to \\infty$, nothing is forgotten) and ask whether memory can outlast the singularity. It does for a drop, yet a dilute bubble pinches off as if the polymer were not there. Why the difference?",
       ],
     },
 
